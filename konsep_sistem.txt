@@ -1,0 +1,52 @@
+== DATA INPUT DAN OUTPUT ==
+1. CV Pemateri
+nama, tempat/tanggal lahir, alamat, hobi, motto, notelp, pekerjaan, Riwayat Pendidikan(ada jenjang, nama sekolah, tahun. bisa lebi dari satu data), Riwayat organisasi(nama organisasi, jabatan, tahun. bisa lebih dari satu), materi(yang diampu)
+
+2. DAFTAR HADIR PESERTA 
+nama pemateri, nama materi, nama, delegasi, ttd
+
+3. LEMBAR PENILAIAN PESERTA
+nama materi, nama, pemahaman, kedisiplinan, keaktifan, rerata
+
+4. LEMBAR OBSERVASI HARIAN oleh PENDAMPING
+nama peserta yang sudah dikelompokkan, nama pendamping kelompok, kedisiplinan(1-5), kemampuan(1-5), keaktifan(1-5), nilai angka
+
+5. LEMBAR NILAI PEMATERI oleh PESERTA
+nama materi, nama pemateri, catatan khusus, nilai(50,60,70,80,90)
+
+6. LEMBAR NILAI INSPEL oleh PESERTA
+nama inspel, catatan khusus, nilai(50,60,70,80,90)
+
+7. LEMBAR EVALUASI DAN REFLEKSI HARIAN PESERTA
+nama, hari/tanggal(ini selama 4 hari), soal dibawah. lalu ada form jawaban
+1. Pengalaman belajar apa yang rekan/rekanita dapat dari pelatihan hari ini, yang paling bermanfaat bagi
+perkembangan diri anda ?
+2. Menurut rekan/rekanita, bagaimana tingkat partisipasi anda dalam pelatihan hari ini ?
+3. Adakah hal yang menghambat atau mendorong rekan/rekanita untuk berpartisipasi dalam latihan hari ini ?
+4. Adakah rekan/rekanita dalam sesi hari ini mempunyai kesempatan untuk mengemukakan pendapat, ide
+pikiran. Kapan dan dalam kesempatan apa ?
+5. Pengetahuan apa saja kah yang rekan/rekanita dapatkan pada hari ini ?
+6. Hal apa saja kah yang menghambat rekan/rekanita dalam mengikuti latihan hari ini, terutama yang
+bersumber dalam diri anda sendiri ?
+
+8. DAFTAR PERTANYAAN PRETEST-POSTTEST
+ini buat saja dropdown materi ini, nanti pertanyaannya berupa text form
+
+
+== MODULE PENDAFTARAN PRA ACARA ==
+harus isi form
+nama lengkap, nia(opsional), delegasi, tempat/tanggal lahir, alamat rumah, jabatan, no hp, username ig, ukuran kaos, ttd
+
+form upload
+file sertifikat makesta/surat keterangan sudah makesta(jika hilang atau belum jadi), surat rekom untuk eksternal pac kauman, pas foto 3x4, kartu identitas(ktp/kartu siswa/mahasiswa), s bukti sudah follow ig pelaksana
+nb: semba form upload dibawa hardfile saat hari h pelaksanaan + 1 biji materai 10rb
+
+== ROLE ==
+khalayak umum semua bisa daftar dan Ketika sudah lolos maka mausk ke table user dengan role peserta(ada menu untuk memilih pendaftar lolos/tidak lolos)
+terdapat 4 role yaitu: admin, peserta, inspel, dan pendamping
+
+1. admin bisa full access semua menu crud
+2. peserta(lolos), bisa tap absensi rfid(2), mengisi data LEMBAR NILAI PEMATERI oleh PESERTA(5), LEMBAR NILAI INSPEL oleh PESERTA(6), dan LEMBAR EVALUASI DAN REFLEKSI HARIAN PESERTA(7)
+3. inspel, bisa melihat data pemateri(1), meihat data absensi peserta(2), mengisi data LEMBAR PENILAIAN PESERTA(3), melihat data LEMBAR EVALUASI DAN REFLEKSI HARIAN PESERTA(7)
+4. pendamping, bisa melihat data absensi peserta(2), LEMBAR OBSERVASI HARIAN oleh PENDAMPING(4)
+
