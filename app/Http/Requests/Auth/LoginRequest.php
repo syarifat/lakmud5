@@ -50,6 +50,20 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // --- TAMBAHKAN LOGIKA INI ---
+        $user = Auth::user();
+        
+        // Jika role pendaftar dan belum lulus, paksa logout dan beri pesan
+        if ($user->role === 'pendaftar') {
+            // Cek status di tabel pendaftarans
+            if (!$user->pendaftaran || $user->pendaftaran->status_lulus == false) {
+                Auth::logout();
+                throw ValidationException::withMessages([
+                    'email' => 'Mohon maaf, akun Anda belum diverifikasi atau dinyatakan lolos oleh Admin. Silakan tunggu pengumuman.',
+                ]);
+            }
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 
