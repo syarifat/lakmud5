@@ -21,13 +21,15 @@
                     <a href="#timeline" class="text-gray-600 hover:text-emerald-600 font-medium transition">Alur Kegiatan</a>
                     <a href="#syarat" class="text-gray-600 hover:text-emerald-600 font-medium transition">Persyaratan</a>
                 </div>
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2 sm:space-x-4">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="text-sm font-semibold text-emerald-700 hover:text-emerald-800">Masuk Dashboard</a>
+                            <a href="{{ url('/dashboard') }}" class="text-xs sm:text-sm font-semibold text-emerald-700 hover:text-emerald-800">Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}" class="hidden md:block text-sm font-semibold text-gray-600 hover:text-emerald-600">Login</a>
-                            <a href="{{ route('pendaftar.biodata') }}" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md shadow-emerald-200 transition transform hover:-translate-y-0.5">Daftar Sekarang</a>
+                            <a href="{{ route('login') }}" class="text-xs sm:text-sm font-semibold text-gray-600 hover:text-emerald-600 px-1">Login</a>
+                            <a href="{{ route('pendaftar.biodata') }}" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 sm:px-5 sm:py-2 rounded-full text-[10px] sm:text-sm font-semibold shadow-md shadow-emerald-200 transition transform hover:-translate-y-0.5 active:scale-95">
+                                Daftar Sekarang
+                            </a>
                         @endauth
                     @endif
                 </div>
@@ -222,6 +224,25 @@
                             <span class="text-2xl">📜</span> E-Sertifikat
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-white border-t border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl p-8 md:p-12 shadow-xl shadow-emerald-200 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="text-center md:text-left">
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Butuh Panduan Lengkap?</h2>
+                    <p class="text-emerald-50 opacity-90">Unduh Terms of Reference (TOR) LAKMUD V untuk informasi lebih detail mengenai materi, jadwal, dan perlengkapan.</p>
+                </div>
+                <div class="shrink-0">
+                    <a href="{{ asset('TOR LAKMUD V - PAC IPNU IPPNU Kauman.pdf') }}" download="TOR LAKMUD V - PAC IPNU IPPNU Kauman.pdf" class="inline-flex items-center gap-3 bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-4 rounded-2xl font-bold text-lg shadow-lg transition transform hover:-translate-y-1">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                        </svg>
+                        Download TOR (.pdf)
+                    </a>
                 </div>
             </div>
         </div>
