@@ -1,0 +1,65 @@
+1. Role: Admin (Full Access)
+Admin bertanggung jawab atas manajemen master data dan validasi pendaftaran.
+
+Dashboard: Ringkasan jumlah pendaftar, peserta lolos, dan grafik absensi harian.
+
+Manajemen User:
+
+Data Pendaftar: Verifikasi berkas (sertifikat, foto, surat rekom) dan tombol "Loloskan" untuk mengubah pendaftar menjadi Peserta.
+
+Data User: Kelola akun Admin, Inspel, dan Pendamping.
+
+Manajemen Acara:
+
+Master Pemateri: CRUD CV Pemateri (termasuk riwayat pendidikan & organisasi).
+
+Master Materi: List materi dan jadwal.
+
+Master Inspel: Data instruktur pelatihan.
+
+Master Kelompok: Memploting peserta ke dalam kelompok pendamping.
+
+Manajemen RFID: Link UID kartu RFID ke ID Peserta.
+
+Laporan (Export PDF/Excel): Rekapitulasi nilai akhir, absensi total, dan hasil evaluasi.
+
+2. Role: Peserta (Lolos)
+Fokus pada absensi dan memberikan feedback (Evaluasi).
+
+Dashboard: Status kehadiran dan jadwal sesi hari ini.
+
+Absensi: Menu untuk melakukan tap RFID (atau scan QR sebagai cadangan) pada setiap sesi.
+
+Feedback & Evaluasi:
+
+Nilai Pemateri: Form penilaian setiap sesi materi selesai (skala 50-90).
+
+Nilai Inspel: Form penilaian kinerja Inspel harian.
+
+Refleksi Harian: Pengisian 6 pertanyaan esai evaluasi harian (Hari 1-4).
+
+Ujian (CBT): Pengerjaan Pre-test dan Post-test sesuai materi yang aktif.
+
+3. Role: Inspel (Instruktur Pelatihan)
+Berfokus pada pemantauan kualitas akademik dan input nilai teknis.
+
+Dashboard: Statistik rata-rata nilai pemahaman peserta per materi.
+
+Database Pemateri: Melihat CV pemateri yang akan mengisi sesi.
+
+Monitoring Absensi: Melihat real-time siapa saja peserta yang sudah hadir di kelas.
+
+Input Nilai Akademik: Form penilaian per materi (Pemahaman, Kedisiplinan, Keaktifan).
+
+Review Refleksi: Membaca hasil evaluasi harian yang diisi peserta untuk bahan evaluasi forum.
+
+4. Role: Pendamping (Fasilitator Kelompok)
+Berfokus pada observasi sikap dan pendampingan kelompok.
+
+Dashboard: List anggota kelompok yang didampingi.
+
+Monitoring Absensi: Memantau kehadiran khusus anggota kelompoknya.
+
+Lembar Observasi Harian: Input nilai angka (skala 1-5) untuk Kedisiplinan, Kemampuan, dan Keaktifan anggota kelompok.
+
+Catatan Kelompok: Menu tambahan untuk catatan khusus perkembangan peserta di kelompok tersebut.
