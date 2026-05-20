@@ -32,7 +32,8 @@
                         <a href="{{ asset('storage/' . $data->file_rekom) }}" target="_blank" class="block p-4 border rounded hover:bg-gray-50 text-center text-xs font-bold">Surat Rekomendasi</a>
                         <a href="{{ asset('storage/' . $data->file_foto) }}" target="_blank" class="block p-4 border rounded hover:bg-gray-50 text-center text-xs font-bold">Pas Foto</a>
                         <a href="{{ asset('storage/' . $data->file_identitas) }}" target="_blank" class="block p-4 border rounded hover:bg-gray-50 text-center text-xs font-bold">ID Card/KTP</a>
-                        <a href="{{ asset('storage/' . $data->file_bukti_ig) }}" target="_blank" class="block p-4 border rounded hover:bg-gray-50 text-center text-xs font-bold">Bukti Follow IG</a>
+                        <a href="{{ asset('storage/' . $data->file_bukti_ig) }}" target="_blank" class="block p-4 border rounded hover:bg-gray-50 text-center text-xs font-bold">Bukti Follow IG @pacipnuippnu.kauman</a>
+                        <a href="{{ asset('storage/' . $data->file_bukti_ig_kaderisasi) }}" target="_blank" class="block p-4 border rounded hover:bg-gray-50 text-center text-xs font-bold">Bukti Follow IG @kaderisasi_pacipnuippnukauman</a>
                     </div>
                 </div>
 

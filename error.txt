@@ -1,0 +1,10 @@
+The file sertifikat field must be an image.
+The file sertifikat field must be a file of type: jpg, png, jpeg.
+The file rekom field must be an image.
+The file rekom field must be a file of type: jpg, png, jpeg.
+The file foto field must be an image.
+The file foto field must be a file of type: jpg, png, jpeg.
+The file identitas field must be an image.
+The file identitas field must be a file of type: jpg, png, jpeg.
+The file bukti ig field must be an image.
+The file bukti ig field must be a file of type: jpg, png, jpeg.

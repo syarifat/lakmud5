@@ -32,11 +32,12 @@ class PendaftaranController extends Controller
             'username_ig' => 'required|string',
             'ukuran_kaos' => 'required|string',
             'ttd_data' => 'required|string',
-            'file_sertifikat' => 'required|image|mimes:jpg,png,jpeg|max:2048',
-            'file_rekom' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'file_sertifikat' => 'required|file|mimes:jpg,png,jpeg,pdf|max:2048',
+            'file_rekom' => 'required|file|mimes:jpg,png,jpeg,pdf|max:2048',
             'file_foto' => 'required|image|mimes:jpg,png,jpeg|max:2048',
-            'file_identitas' => 'required|image|mimes:jpg,png,jpeg|max:2048',
-            'file_bukti_ig' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'file_identitas' => 'required|file|mimes:jpg,png,jpeg,pdf|max:2048',
+            'file_bukti_ig' => 'required|file|mimes:jpg,png,jpeg,pdf|max:2048',
+            'file_bukti_ig_kaderisasi' => 'required|file|mimes:jpg,png,jpeg,pdf|max:2048',
         ]);
 
         // 2. Buat Akun User Baru (Role Otomatis 'pendaftar')
@@ -74,6 +75,7 @@ class PendaftaranController extends Controller
             'file_foto' => $upload($request->file('file_foto')),
             'file_identitas' => $upload($request->file('file_identitas')),
             'file_bukti_ig' => $upload($request->file('file_bukti_ig')),
+            'file_bukti_ig_kaderisasi' => $upload($request->file('file_bukti_ig_kaderisasi')),
             'status_lulus' => false,
         ]);
 

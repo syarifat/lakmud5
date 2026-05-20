@@ -95,29 +95,40 @@
                     <h3 class="text-lg font-bold text-emerald-800 mb-4">3. Upload Berkas Pendukung</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Sertifikat MAKESTA (JPG/PNG)</label>
-                            <input type="file" name="file_sertifikat" class="block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Sertifikat MAKESTA (JPG/PNG/PDF)</label>
+                            <input type="file" name="file_sertifikat" accept=".jpg,.jpeg,.png,.pdf" class="file-upload-input block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
                             <p class="mt-1 text-xs text-gray-500">Maks. 2MB</p>
+                            <p class="mt-1 text-xs text-red-600 hidden error-msg"></p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Surat Rekomendasi (JPG/PNG)</label>
-                            <input type="file" name="file_rekom" class="block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Surat Rekomendasi (JPG/PNG/PDF)</label>
+                            <input type="file" name="file_rekom" accept=".jpg,.jpeg,.png,.pdf" class="file-upload-input block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
                             <p class="mt-1 text-xs text-gray-500">Maks. 2MB</p>
+                            <p class="mt-1 text-xs text-red-600 hidden error-msg"></p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Pas Foto 3x4 Background Merah</label>
-                            <input type="file" name="file_foto" class="block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Pas Foto 3x4 Background Merah (Hanya JPG/PNG)</label>
+                            <input type="file" name="file_foto" accept=".jpg,.jpeg,.png" class="file-upload-input block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
                             <p class="mt-1 text-xs text-gray-500">Maks. 2MB</p>
+                            <p class="mt-1 text-xs text-red-600 hidden error-msg"></p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Kartu Identitas (KTP/Kartu Pelajar)</label>
-                            <input type="file" name="file_identitas" class="block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kartu Identitas (KTP/Kartu Pelajar) (JPG/PNG/PDF)</label>
+                            <input type="file" name="file_identitas" accept=".jpg,.jpeg,.png,.pdf" class="file-upload-input block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
                             <p class="mt-1 text-xs text-gray-500">Maks. 2MB</p>
+                            <p class="mt-1 text-xs text-red-600 hidden error-msg"></p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Bukti Follow Instagram</label>
-                            <input type="file" name="file_bukti_ig" class="block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Bukti Follow IG (@pacipnuippnu.kauman) (JPG/PNG/PDF)</label>
+                            <input type="file" name="file_bukti_ig" accept=".jpg,.jpeg,.png,.pdf" class="file-upload-input block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
                             <p class="mt-1 text-xs text-gray-500">Maks. 2MB</p>
+                            <p class="mt-1 text-xs text-red-600 hidden error-msg"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Bukti Follow IG (@kaderisasi_pacipnuippnukauman)</label>
+                            <input type="file" name="file_bukti_ig_kaderisasi" accept=".jpg,.jpeg,.png,.pdf" class="file-upload-input block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
+                            <p class="mt-1 text-xs text-gray-500">Maks. 2MB</p>
+                            <p class="mt-1 text-xs text-red-600 hidden error-msg"></p>
                         </div>
                     </div>
                 </div>
@@ -194,6 +205,40 @@
             pathsGroup.innerHTML = '';
             inputHidden.value = '';
         }
+
+        // Validasi File Upload
+        document.querySelectorAll('.file-upload-input').forEach(input => {
+            input.addEventListener('change', function() {
+                const file = this.files[0];
+                const errorElement = this.parentElement.querySelector('.error-msg');
+                if (!file) {
+                    errorElement.classList.add('hidden');
+                    return;
+                }
+
+                // Cek ukuran max 2MB
+                if (file.size > 2 * 1024 * 1024) {
+                    this.value = '';
+                    errorElement.textContent = 'Ukuran file melebihi 2MB.';
+                    errorElement.classList.remove('hidden');
+                    return;
+                }
+
+                // Cek tipe file (foto hanya jpg/png, lainnya +pdf)
+                const isPhoto = this.name === 'file_foto';
+                const allowedExtensions = isPhoto ? ['jpg', 'jpeg', 'png'] : ['jpg', 'jpeg', 'png', 'pdf'];
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                
+                if (!allowedExtensions.includes(fileExtension)) {
+                    this.value = '';
+                    errorElement.textContent = `File tidak didukung. Harap unggah: ${allowedExtensions.join(', ')}.`;
+                    errorElement.classList.remove('hidden');
+                    return;
+                }
+
+                errorElement.classList.add('hidden');
+            });
+        });
     </script>
 </body>
 </html>
