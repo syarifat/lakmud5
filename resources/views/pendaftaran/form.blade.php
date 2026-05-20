@@ -133,16 +133,18 @@
                     </div>
                 </div>
 
-                <div class="mt-8 border-t pt-6">
-                    <label class="block text-sm font-medium text-gray-700">4. Tanda Tangan Digital</label>
-                    <div class="mt-2 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 relative h-64 overflow-hidden">
+                <div class="mt-8 border-t pt-6 text-center">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">4. Tanda Tangan Digital (Tanda tangan di dalam kotak bawah)</label>
+                    <div class="mx-auto w-full max-w-sm h-48 border-2 border-dashed border-gray-400 rounded-lg bg-white relative overflow-hidden shadow-inner">
                         <svg id="ttd-svg" class="absolute inset-0 w-full h-full cursor-crosshair touch-none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="100%" height="100%" fill="transparent" />
                             <g id="svg-paths" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></g>
                         </svg>
                     </div>
-                    <input type="hidden" name="ttd_data" id="ttd_data">
-                    <button type="button" onclick="clearTTD()" class="mt-2 text-sm text-red-600 font-bold hover:underline">Hapus Tanda Tangan</button>
+                    <div class="mt-2">
+                        <input type="hidden" name="ttd_data" id="ttd_data">
+                        <button type="button" onclick="clearTTD()" class="text-sm text-red-600 font-bold hover:underline">Hapus Tanda Tangan</button>
+                    </div>
                 </div>
 
                 <div class="mt-10">

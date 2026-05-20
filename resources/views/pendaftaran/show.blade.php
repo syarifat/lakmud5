@@ -22,8 +22,8 @@
                             <h3 class="text-lg font-bold text-emerald-800">Tanda Tangan</h3>
                             <a href="{{ asset('storage/' . $data->file_ttd) }}" target="_blank" class="text-xs text-blue-600 hover:underline">Buka di Tab Baru</a>
                         </div>
-                        <div class="border rounded bg-gray-50 h-48 overflow-x-auto relative">
-                            <img src="{{ asset('storage/' . $data->file_ttd) }}" class="min-w-[400px] w-full h-full object-contain object-left" alt="TTD">
+                        <div class="border rounded bg-gray-50 h-48 w-full max-w-sm mx-auto overflow-hidden flex items-center justify-center">
+                            <img src="{{ asset('storage/' . $data->file_ttd) }}" class="w-full h-full object-contain" alt="TTD">
                         </div>
                     </div>
                 </div>
