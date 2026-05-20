@@ -173,6 +173,9 @@
 
         const startDrawing = (e) => {
             isDrawing = true;
+            if (!svg.hasAttribute('viewBox')) {
+                svg.setAttribute('viewBox', `0 0 ${svg.clientWidth} ${svg.clientHeight}`);
+            }
             const { x, y } = getCoords(e);
             currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
             currentPath.setAttribute("d", `M ${x} ${y}`);

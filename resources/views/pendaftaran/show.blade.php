@@ -18,9 +18,12 @@
                     </div>
 
                     <div>
-                        <h3 class="text-lg font-bold text-emerald-800 border-b pb-2 mb-4">Tanda Tangan</h3>
-                        <div class="border rounded bg-gray-50 h-32 flex items-center justify-center overflow-hidden">
-                            <img src="{{ asset('storage/' . $data->file_ttd) }}" class="h-full object-contain" alt="TTD">
+                        <div class="flex justify-between items-end border-b pb-2 mb-4">
+                            <h3 class="text-lg font-bold text-emerald-800">Tanda Tangan</h3>
+                            <a href="{{ asset('storage/' . $data->file_ttd) }}" target="_blank" class="text-xs text-blue-600 hover:underline">Buka di Tab Baru</a>
+                        </div>
+                        <div class="border rounded bg-gray-50 h-48 overflow-x-auto relative">
+                            <img src="{{ asset('storage/' . $data->file_ttd) }}" class="min-w-[400px] w-full h-full object-contain object-left" alt="TTD">
                         </div>
                     </div>
                 </div>
