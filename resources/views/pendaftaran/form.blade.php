@@ -102,7 +102,7 @@
                             <p class="mt-1 text-xs text-red-600 hidden error-msg"></p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Surat Rekomendasi (JPG/PNG/PDF)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Surat Rekomendasi(Khusus Eksternal) (JPG/PNG/PDF)</label>
                             <input type="file" name="file_rekom" accept=".jpg,.jpeg,.png,.pdf" class="file-upload-input block w-full text-sm text-gray-600 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" required>
                             <p class="mt-1 text-xs text-gray-500">Maks. 2MB</p>
                             <p class="mt-1 text-xs text-red-600 hidden error-msg"></p>
