@@ -33,9 +33,18 @@ Route::middleware(['auth', 'role:pendaftar'])->prefix('pendaftaran')->name('pend
 
 // 2. Route Khusus Role: Peserta (Lolos)
 Route::middleware(['auth', 'role:peserta'])->prefix('peserta')->name('peserta.')->group(function () {
-    Route::get('/dashboard', function() {
-        return "Ini halaman dashboard Peserta.";
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Peserta\PesertaController::class, 'dashboard'])->name('dashboard');
+    Route::get('/absensi', [App\Http\Controllers\Peserta\PesertaController::class, 'absensi'])->name('absensi');
+    Route::post('/absensi/tap', [App\Http\Controllers\Peserta\PesertaController::class, 'tapAbsen'])->name('absensi.tap');
+    Route::get('/nilai-pemateri', [App\Http\Controllers\Peserta\PesertaController::class, 'nilaiPemateriIndex'])->name('nilai-pemateri');
+    Route::post('/nilai-pemateri/store', [App\Http\Controllers\Peserta\PesertaController::class, 'nilaiPemateriStore'])->name('nilai-pemateri.store');
+    Route::get('/nilai-inspel', [App\Http\Controllers\Peserta\PesertaController::class, 'nilaiInspelIndex'])->name('nilai-inspel');
+    Route::post('/nilai-inspel/store', [App\Http\Controllers\Peserta\PesertaController::class, 'nilaiInspelStore'])->name('nilai-inspel.store');
+    Route::get('/refleksi', [App\Http\Controllers\Peserta\PesertaController::class, 'refleksiIndex'])->name('refleksi');
+    Route::post('/refleksi/store', [App\Http\Controllers\Peserta\PesertaController::class, 'refleksiStore'])->name('refleksi.store');
+    Route::get('/ujian', [App\Http\Controllers\Peserta\PesertaController::class, 'ujianIndex'])->name('ujian');
+    Route::get('/ujian/{materi_id}', [App\Http\Controllers\Peserta\PesertaController::class, 'ujianMulai'])->name('ujian.mulai');
+    Route::post('/ujian/{materi_id}/store', [App\Http\Controllers\Peserta\PesertaController::class, 'ujianStore'])->name('ujian.store');
 });
 
 // 3. Route Khusus Role: Inspel
