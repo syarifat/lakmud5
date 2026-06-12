@@ -49,16 +49,23 @@ Route::middleware(['auth', 'role:peserta'])->prefix('peserta')->name('peserta.')
 
 // 3. Route Khusus Role: Inspel
 Route::middleware(['auth', 'role:inspel'])->prefix('inspel')->name('inspel.')->group(function () {
-    Route::get('/dashboard', function() {
-        return "Ini halaman dashboard Inspel.";
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Inspel\InspelController::class, 'dashboard'])->name('dashboard');
+    Route::get('/pemateri', [App\Http\Controllers\Inspel\InspelController::class, 'pemateriIndex'])->name('pemateri');
+    Route::get('/pemateri/{id}', [App\Http\Controllers\Inspel\InspelController::class, 'pemateriShow'])->name('pemateri.show');
+    Route::get('/absensi', [App\Http\Controllers\Inspel\InspelController::class, 'absensi'])->name('absensi');
+    Route::get('/penilaian', [App\Http\Controllers\Inspel\InspelController::class, 'penilaianIndex'])->name('penilaian');
+    Route::get('/penilaian/create', [App\Http\Controllers\Inspel\InspelController::class, 'penilaianCreate'])->name('penilaian.create');
+    Route::post('/penilaian/store', [App\Http\Controllers\Inspel\InspelController::class, 'penilaianStore'])->name('penilaian.store');
+    Route::get('/refleksi', [App\Http\Controllers\Inspel\InspelController::class, 'refleksiIndex'])->name('refleksi');
+    Route::get('/refleksi/{id}', [App\Http\Controllers\Inspel\InspelController::class, 'refleksiShow'])->name('refleksi.show');
 });
 
 // 4. Route Khusus Role: Pendamping
 Route::middleware(['auth', 'role:pendamping'])->prefix('pendamping')->name('pendamping.')->group(function () {
-    Route::get('/dashboard', function() {
-        return "Ini halaman dashboard Pendamping.";
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Pendamping\PendampingController::class, 'dashboard'])->name('dashboard');
+    Route::get('/absensi', [App\Http\Controllers\Pendamping\PendampingController::class, 'absensi'])->name('absensi');
+    Route::get('/observasi', [App\Http\Controllers\Pendamping\PendampingController::class, 'observasiIndex'])->name('observasi');
+    Route::post('/observasi/store', [App\Http\Controllers\Pendamping\PendampingController::class, 'observasiStore'])->name('observasi.store');
 });
 
 // 5. Route Khusus Role: Admin
