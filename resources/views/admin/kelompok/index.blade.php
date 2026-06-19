@@ -23,7 +23,23 @@
                             <span class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full font-bold uppercase">LAKMUD V</span>
                         </div>
                         <p class="text-sm text-gray-500">Pendamping:</p>
-                        <p class="font-semibold text-gray-900 mb-4">{{ $k->pendamping->name ?? 'Belum ditentukan' }}</p>
+                        <p class="font-semibold text-gray-900 mb-2">{{ $k->pendamping->name ?? 'Belum ditentukan' }}</p>
+
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <p class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2">Anggota ({{ $k->pesertas->count() }})</p>
+                            @if($k->pesertas->isEmpty())
+                                <p class="text-xs text-gray-400 italic">Belum ada anggota kelompok.</p>
+                            @else
+                                <div class="max-h-28 overflow-y-auto space-y-1.5 pr-1">
+                                    @foreach($k->pesertas as $peserta)
+                                        <div class="flex items-center justify-between text-xs text-gray-700 bg-gray-50 px-2.5 py-1.5 rounded-lg border border-gray-100">
+                                            <span class="font-semibold">{{ $peserta->name }}</span>
+                                            <span class="text-[9px] font-mono text-gray-450">{{ $peserta->rfid_uid ?? '-' }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     
                     <div class="flex gap-2 pt-4 border-t">

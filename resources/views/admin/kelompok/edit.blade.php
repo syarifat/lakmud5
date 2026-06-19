@@ -22,6 +22,39 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div>
+                            <x-input-label value="Pilih Anggota Kelompok (Peserta)" class="mb-2" />
+                            @if($pesertas->isEmpty())
+                                <p class="text-sm text-gray-500 italic bg-gray-50 p-4 rounded-xl border">Tidak ada peserta yang tersedia untuk kelompok ini saat ini.</p>
+                            @else
+                                <div class="border rounded-xl p-4 max-h-60 overflow-y-auto space-y-2 bg-gray-50/50">
+                                    @php
+                                        $currentPesertaIds = $kelompok->pesertas->pluck('id')->toArray();
+                                    @endphp
+                                    @foreach($pesertas as $peserta)
+                                        @php
+                                            $isChecked = in_array($peserta->id, $currentPesertaIds);
+                                        @endphp
+                                        <label class="flex items-center gap-3 p-2 bg-white rounded-lg border cursor-pointer hover:bg-emerald-50/30 transition {{ $isChecked ? 'border-emerald-500 bg-emerald-50/10' : 'border-gray-100' }}">
+                                            <input type="checkbox" name="peserta_ids[]" value="{{ $peserta->id }}" 
+                                                class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                                                {{ $isChecked ? 'checked' : '' }}>
+                                            <div class="text-sm">
+                                                <p class="font-bold text-gray-900 leading-tight flex items-center gap-2">
+                                                    {{ $peserta->name }}
+                                                    @if($isChecked)
+                                                        <span class="text-[9px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold uppercase">Anggota Aktif</span>
+                                                    @endif
+                                                </p>
+                                                <p class="text-xs text-gray-500">{{ $peserta->email }}</p>
+                                            </div>
+                                        </label>
+                                    @endforeach
+                                </div>
+                                <p class="mt-2 text-xs text-gray-500 italic">*Menampilkan peserta kelompok ini & peserta lain yang belum memiliki kelompok.</p>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="flex justify-end gap-3 mt-10">

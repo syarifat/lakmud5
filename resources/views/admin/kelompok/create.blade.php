@@ -24,6 +24,27 @@
                             </select>
                             <p class="mt-2 text-xs text-gray-500 italic">*Jika daftar kosong, pastikan Anda sudah menambahkan user dengan role 'pendamping'.</p>
                         </div>
+
+                        <div>
+                            <x-input-label value="Pilih Anggota Kelompok (Peserta)" class="mb-2" />
+                            @if($pesertas->isEmpty())
+                                <p class="text-sm text-gray-500 italic bg-gray-50 p-4 rounded-xl border">Tidak ada peserta yang belum memiliki kelompok saat ini.</p>
+                            @else
+                                <div class="border rounded-xl p-4 max-h-60 overflow-y-auto space-y-2 bg-gray-50/50">
+                                    @foreach($pesertas as $peserta)
+                                        <label class="flex items-center gap-3 p-2 bg-white rounded-lg border border-gray-100 cursor-pointer hover:bg-emerald-50/30 transition">
+                                            <input type="checkbox" name="peserta_ids[]" value="{{ $peserta->id }}" 
+                                                class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500">
+                                            <div class="text-sm">
+                                                <p class="font-bold text-gray-900 leading-tight">{{ $peserta->name }}</p>
+                                                <p class="text-xs text-gray-500">{{ $peserta->email }}</p>
+                                            </div>
+                                        </label>
+                                    @endforeach
+                                </div>
+                                <p class="mt-2 text-xs text-gray-500 italic">*Hanya menampilkan peserta yang belum diploting ke kelompok manapun.</p>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="flex justify-end gap-3 mt-10">
