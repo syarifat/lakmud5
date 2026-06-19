@@ -11,21 +11,29 @@ class PemateriController extends Controller
 {
     public function index()
     {
-        $pemateris = Pemateri::latest()->get();
+        $pemateris = Pemateri::with('materi')->latest()->get();
         return view('admin.pemateri.index', compact('pemateris'));
     }
 
     public function create()
     {
-        return view('admin.pemateri.create');
+        $materis = \App\Models\Materi::orderBy('nama_materi')->get();
+        return view('admin.pemateri.create', compact('materis'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'jabatan' => 'required|string|max:255',
-            'no_hp' => 'required|string|max:20',
+            'materi_id' => 'nullable|exists:materis,id',
+            'jabatan' => 'nullable|string|max:255',
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'required|string',
+            'hobi' => 'required|string|max:255',
+            'motto' => 'required|string|max:255',
+            'no_telp' => 'required|string|max:20',
+            'pekerjaan' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
@@ -42,15 +50,23 @@ class PemateriController extends Controller
 
     public function edit(Pemateri $pemateri)
     {
-        return view('admin.pemateri.edit', compact('pemateri'));
+        $materis = \App\Models\Materi::orderBy('nama_materi')->get();
+        return view('admin.pemateri.edit', compact('pemateri', 'materis'));
     }
 
     public function update(Request $request, Pemateri $pemateri)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'jabatan' => 'required|string|max:255',
-            'no_hp' => 'required|string|max:20',
+            'materi_id' => 'nullable|exists:materis,id',
+            'jabatan' => 'nullable|string|max:255',
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'required|string',
+            'hobi' => 'required|string|max:255',
+            'motto' => 'required|string|max:255',
+            'no_telp' => 'required|string|max:20',
+            'pekerjaan' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 

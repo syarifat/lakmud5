@@ -20,6 +20,7 @@
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Foto</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama & Jabatan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Materi yang Diampu</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kontak</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
                         </tr>
@@ -32,9 +33,14 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900">{{ $p->nama }}</div>
-                                <div class="text-xs text-gray-500">{{ $p->jabatan }}</div>
+                                <div class="text-xs text-gray-500">{{ $p->jabatan ?? '-' }}</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $p->no_hp }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800">
+                                    {{ $p->materi?->nama_materi ?? 'Belum Ditentukan' }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $p->no_telp }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-3">
                                 <a href="{{ route('admin.pemateri.edit', $p->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 <form action="{{ route('admin.pemateri.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Hapus pemateri ini?')">
