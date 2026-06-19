@@ -86,21 +86,21 @@
     <table style="width: 100%; border-collapse: collapse; border-bottom: 4px double #000000; padding-bottom: 8px; margin-bottom: 20px;">
         <tr>
             <td style="width: 15%; text-align: left; vertical-align: middle; padding-bottom: 8px;">
-                <img src="{{ public_path('logo.png') }}" style="height: 80px; width: auto;">
+                <img src="{{ public_path('logo.png') }}" style="height: 85px; width: auto;">
             </td>
-            <td style="width: 85%; text-align: center; vertical-align: middle; padding-bottom: 8px; padding-right: 30px;">
-                <div style="font-family: 'Times New Roman', Times, serif; font-size: 14pt; color: #00A651; font-weight: bold; line-height: 1.2; text-transform: uppercase;">
-                    PANITIA PELAKSANA LATIHAN KADER MUDA<br>
+            <td style="width: 85%; text-align: right; vertical-align: middle; padding-bottom: 8px; padding-right: 5px;">
+                <div style="font-family: 'Times New Roman', Times, serif; font-size: 14pt; color: #00A651; font-weight: bold; line-height: 1.25; text-transform: uppercase;">
+                    PANITIA PELAKSANA LATIHAN KADER MUDA V<br>
                     PIMPINAN ANAK CABANG<br>
                     IKATAN PELAJAR NAHDLATUL ULAMA<br>
-                    IKATAN PELAJAR PUTRI NAHDLATUL ULAMA
-                </div>
-                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #FF0000; font-weight: bold; margin-top: 4px; text-transform: uppercase;">
+                    IKATAN PELAJAR PUTRI NAHDLATUL ULAMA<br>
                     KECAMATAN KAUMAN
                 </div>
-                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #FF0000; font-weight: bold; line-height: 1.3; margin-top: 3px;">
-                    Kantor PCNU Lt. I, Jl. Pattimura Gg. II No. 09 Gedangsewu – Boyolangu – Tulungagung<br>
-                    08563500282 / 085720450149 | ipnutulungagungsiap@gmail.com | www.pcipnu-ippnutulungagung.or.id
+                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #000000; font-weight: bold; line-height: 1.3; margin-top: 5px;">
+                    Jln. Sidoluhur Gg. II, Dsn. Bancaan, Ds. Mojosari, Kec. Kauman - Tulungagung<br>
+                    0883011340460/089617377022<br>
+                    pacipippkauman@gmail.com<br>
+                    pacipnuippnukauman.online
                 </div>
             </td>
         </tr>
