@@ -74,6 +74,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     // Manajemen Pendaftar
     Route::get('/pendaftar', [AdminController::class, 'pendaftarIndex'])->name('pendaftar.index');
+    Route::get('/pendaftar/export', [AdminController::class, 'export'])->name('pendaftar.export');
     Route::get('/pendaftar/{id}', [AdminController::class, 'pendaftarShow'])->name('pendaftar.show');
     Route::post('/pendaftar/{id}/verifikasi', [AdminController::class, 'verifikasi'])->name('pendaftar.verifikasi');
 

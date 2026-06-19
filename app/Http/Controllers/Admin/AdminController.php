@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pendaftaran;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -47,5 +48,24 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin.pendaftar.index')->with('status', $pesan);
+    }
+
+    public function export(Request $request)
+    {
+        $request->validate([
+            'fields' => 'required|array',
+            'fields.*' => 'string|in:nama,email,nia,delegasi,ttl,alamat,jabatan,no_hp,username_ig,ukuran_kaos,status_lulus',
+        ]);
+
+        $selected_fields = $request->fields;
+
+        $pendaftar = Pendaftaran::with('user')->latest()->get();
+
+        $pdf = Pdf::loadView('admin.pendaftar.pdf', compact('pendaftar', 'selected_fields'));
+
+        $orientation = count($selected_fields) > 5 ? 'landscape' : 'portrait';
+        $pdf->setPaper('a4', $orientation);
+
+        return $pdf->download('Data_Pendaftar_LAKMUD_V.pdf');
     }
 }
