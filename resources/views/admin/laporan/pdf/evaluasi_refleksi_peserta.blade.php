@@ -67,10 +67,10 @@
 
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
         <tr>
-            <td style="width: 20%; text-align: left; vertical-align: middle; padding-bottom: 8px;">
-                <img src="{{ public_path('logo.png') }}" style="height: 110px; width: auto;">
+            <td style="width: 25%; text-align: left; vertical-align: middle; padding-bottom: 8px;">
+                <img src="{{ public_path('logo.png') }}" style="height: 180px; width: auto;">
             </td>
-            <td style="width: 80%; text-align: right; vertical-align: middle; padding-bottom: 8px; padding-right: 5px;">
+            <td style="width: 75%; text-align: right; vertical-align: middle; padding-bottom: 8px; padding-right: 5px;">
                 <div style="font-family: 'Times New Roman', Times, serif; font-size: 16pt; color: #00A651; font-weight: bold; line-height: 1.25; text-transform: uppercase;">
                     PANITIA PELAKSANA LATIHAN KADER MUDA V<br>
                     PIMPINAN ANAK CABANG<br>
