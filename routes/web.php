@@ -87,6 +87,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/jadwal', [App\Http\Controllers\Admin\JadwalController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal', [App\Http\Controllers\Admin\JadwalController::class, 'store'])->name('jadwal.store');
     Route::delete('/jadwal/{id}', [App\Http\Controllers\Admin\JadwalController::class, 'destroy'])->name('jadwal.destroy');
+
+    // Laporan Total
+    Route::get('/laporan', [App\Http\Controllers\Admin\LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/download', [App\Http\Controllers\Admin\LaporanController::class, 'download'])->name('laporan.download');
 });
 
 // ==========================================
