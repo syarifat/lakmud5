@@ -84,10 +84,32 @@
 </head>
 <body>
 
-    <div class="header">
-        <h1>LEMBAR PENILAIAN INSTRUKTUR/PELATIH</h1>
-        <h2>OLEH PESERTA LATIHAN KADER MUDA</h2>
-        <h3>PAC IPNU IPPNU KAUMAN</h3>
+    <table style="width: 100%; border-collapse: collapse; border-bottom: 4px double #000000; padding-bottom: 8px; margin-bottom: 20px;">
+        <tr>
+            <td style="width: 15%; text-align: left; vertical-align: middle; padding-bottom: 8px;">
+                <img src="{{ public_path('logo.png') }}" style="height: 80px; width: auto;">
+            </td>
+            <td style="width: 85%; text-align: center; vertical-align: middle; padding-bottom: 8px; padding-right: 30px;">
+                <div style="font-family: 'Times New Roman', Times, serif; font-size: 14pt; color: #00A651; font-weight: bold; line-height: 1.2; text-transform: uppercase;">
+                    PANITIA PELAKSANA LATIHAN KADER MUDA<br>
+                    PIMPINAN ANAK CABANG<br>
+                    IKATAN PELAJAR NAHDLATUL ULAMA<br>
+                    IKATAN PELAJAR PUTRI NAHDLATUL ULAMA
+                </div>
+                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #FF0000; font-weight: bold; margin-top: 4px; text-transform: uppercase;">
+                    KECAMATAN KAUMAN
+                </div>
+                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #FF0000; font-weight: bold; line-height: 1.3; margin-top: 3px;">
+                    Kantor PCNU Lt. I, Jl. Pattimura Gg. II No. 09 Gedangsewu – Boyolangu – Tulungagung<br>
+                    08563500282 / 085720450149 | ipnutulungagungsiap@gmail.com | www.pcipnu-ippnutulungagung.or.id
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="header" style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+        <h1 style="font-size: 12pt; font-weight: bold; text-transform: uppercase;">LEMBAR PENILAIAN INSTRUKTUR/PELATIH</h1>
+        <h2 style="font-size: 11pt; font-weight: bold; text-transform: uppercase; margin-top: 3px; color: #444;">OLEH PESERTA LATIHAN KADER MUDA</h2>
     </div>
 
     <div class="instructions">
