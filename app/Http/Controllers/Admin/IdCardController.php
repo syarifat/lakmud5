@@ -11,7 +11,7 @@ class IdCardController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::where('role', 'peserta')->with('pendaftaran');
+        $query = User::whereIn('role', ['peserta', 'pendaftar'])->with('pendaftaran');
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
@@ -30,7 +30,7 @@ class IdCardController extends Controller
 
     public function download($id)
     {
-        $peserta = User::where('role', 'peserta')->with('pendaftaran')->findOrFail($id);
+        $peserta = User::whereIn('role', ['peserta', 'pendaftar'])->with('pendaftaran')->findOrFail($id);
 
         $pdf = Pdf::loadView('admin.idcard.pdf', compact('peserta'));
         
@@ -42,7 +42,7 @@ class IdCardController extends Controller
 
     public function downloadAll(Request $request)
     {
-        $pesertas = User::where('role', 'peserta')->with('pendaftaran')->latest()->get();
+        $pesertas = User::whereIn('role', ['peserta', 'pendaftar'])->with('pendaftaran')->latest()->get();
 
         if ($pesertas->isEmpty()) {
             return redirect()->back()->with('status', 'Tidak ada data peserta untuk diexport.');

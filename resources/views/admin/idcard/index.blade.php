@@ -62,7 +62,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500 italic">Belum ada peserta (lolos verifikasi).</td>
+                                    <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500 italic">Belum ada data pendaftar atau peserta.</td>
                                 </tr>
                                 @endforelse
                             </tbody>
