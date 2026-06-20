@@ -56,9 +56,9 @@ class IdCardController extends Controller
 
         // Load and place participant's photo or default silhouette
         $photoUploaded = false;
-        if ($peserta->pendaftaran && $peserta->pendaftaran->file_foto) {
+        if ($peserta->pendaftaran && !empty($peserta->pendaftaran->file_foto)) {
             $photoPath = public_path('storage/' . $peserta->pendaftaran->file_foto);
-            if (file_exists($photoPath)) {
+            if (is_file($photoPath)) {
                 $photo = $this->loadImage($photoPath);
                 if ($photo) {
                     $photoUploaded = true;
@@ -93,7 +93,7 @@ class IdCardController extends Controller
         }
 
         if (!$photoUploaded) {
-            // Draw default golden stamp background
+            // Draw default golden background
             $goldColor = imagecolorallocate($im, 204, 160, 52); // Hex #cca034
             imagefilledrectangle($im, $stamp_left, $stamp_top, $stamp_left + $stamp_width, $stamp_top + $stamp_height, $goldColor);
 
@@ -128,27 +128,6 @@ class IdCardController extends Controller
                     imagesetpixel($im, $stamp_left + $stamp_width - 1 - $i, $stamp_top + $stamp_height - 1 - $j, $bgColor);
                 }
             }
-        }
-
-        // Draw perforation dots on the stamp edges
-        // Left & Right edges
-        $yOffsets = [20, 45, 70, 95, 120, 145, 170, 195];
-        foreach ($yOffsets as $offset) {
-            $yCenter = $stamp_top + (int)round(($offset + 7) * 3.19936);
-            // Left edge
-            imagefilledellipse($im, $stamp_left, $yCenter, 45, 45, $bgColor);
-            // Right edge
-            imagefilledellipse($im, $stamp_left + $stamp_width, $yCenter, 45, 45, $bgColor);
-        }
-
-        // Top & Bottom edges
-        $xOffsets = [20, 45, 70, 95, 120, 145];
-        foreach ($xOffsets as $offset) {
-            $xCenter = $stamp_left + (int)round(($offset + 7) * 3.206);
-            // Top edge
-            imagefilledellipse($im, $xCenter, $stamp_top, 45, 45, $bgColor);
-            // Bottom edge
-            imagefilledellipse($im, $xCenter, $stamp_top + $stamp_height, 45, 45, $bgColor);
         }
 
         // Write Nama and Delegasi text details

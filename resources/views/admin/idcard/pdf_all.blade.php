@@ -45,26 +45,7 @@
             border-radius: 8pt;
             z-index: 2;
         }
-        .dot {
-            position: absolute;
-            width: 14pt;
-            height: 14pt;
-            border-radius: 50%;
-            background-color: #F5F2E9;
-            z-index: 3;
-        }
-        .dot.left {
-            left: -7pt;
-        }
-        .dot.right {
-            right: -7pt;
-        }
-        .dot.top {
-            top: -7pt;
-        }
-        .dot.bottom {
-            bottom: -7pt;
-        }
+        /* Removed dot perforation styles */
     </style>
 </head>
 <body>
@@ -76,41 +57,7 @@
 
         <!-- Stamp Background with CSS Perforation -->
         <div class="stamp-bg">
-            <!-- Left edge perforation -->
-            <div class="dot left" style="top: 20pt;"></div>
-            <div class="dot left" style="top: 45pt;"></div>
-            <div class="dot left" style="top: 70pt;"></div>
-            <div class="dot left" style="top: 95pt;"></div>
-            <div class="dot left" style="top: 120pt;"></div>
-            <div class="dot left" style="top: 145pt;"></div>
-            <div class="dot left" style="top: 170pt;"></div>
-            <div class="dot left" style="top: 195pt;"></div>
-
-            <!-- Right edge perforation -->
-            <div class="dot right" style="top: 20pt;"></div>
-            <div class="dot right" style="top: 45pt;"></div>
-            <div class="dot right" style="top: 70pt;"></div>
-            <div class="dot right" style="top: 95pt;"></div>
-            <div class="dot right" style="top: 120pt;"></div>
-            <div class="dot right" style="top: 145pt;"></div>
-            <div class="dot right" style="top: 170pt;"></div>
-            <div class="dot right" style="top: 195pt;"></div>
-
-            <!-- Top edge perforation -->
-            <div class="dot top" style="left: 20pt;"></div>
-            <div class="dot top" style="left: 45pt;"></div>
-            <div class="dot top" style="left: 70pt;"></div>
-            <div class="dot top" style="left: 95pt;"></div>
-            <div class="dot top" style="left: 120pt;"></div>
-            <div class="dot top" style="left: 145pt;"></div>
-
-            <!-- Bottom edge perforation -->
-            <div class="dot bottom" style="left: 20pt;"></div>
-            <div class="dot bottom" style="left: 45pt;"></div>
-            <div class="dot bottom" style="left: 70pt;"></div>
-            <div class="dot bottom" style="left: 95pt;"></div>
-            <div class="dot bottom" style="left: 120pt;"></div>
-            <div class="dot bottom" style="left: 145pt;"></div>
+            <!-- Left, Right, Top, Bottom edge perforations removed (plain box layout) -->
 
             <!-- Participant's Photo or Silhouette Placeholder -->
             @if($peserta->pendaftaran && $peserta->pendaftaran->file_foto && file_exists(public_path('storage/' . $peserta->pendaftaran->file_foto)))
