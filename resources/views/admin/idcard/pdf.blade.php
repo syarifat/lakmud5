@@ -59,23 +59,7 @@
         .dot.bottom {
             bottom: -7pt;
         }
-        .photo-container {
-            position: absolute;
-            top: 235pt;
-            left: 139pt; /* 114pt (stamp left) + 25pt (offset) = 139pt */
-            width: 120pt;
-            height: 120pt;
-            border-radius: 50%;
-            border: 4px solid #fff;
-            overflow: hidden;
-            background-color: #fff;
-            z-index: 4;
-        }
-        .photo-img {
-            width: 120pt;
-            height: 120pt;
-            display: block;
-        }
+        /* Removed photo-container and photo-img styles */
     </style>
 </head>
 <body>
@@ -122,24 +106,20 @@
             <div class="dot bottom" style="left: 120pt;"></div>
             <div class="dot bottom" style="left: 145pt;"></div>
 
-            <!-- Default Silhouette Placeholder (renders only if no photo upload exists) -->
-            @if(!($peserta->pendaftaran && $peserta->pendaftaran->file_foto && file_exists(public_path('storage/' . $peserta->pendaftaran->file_foto))))
+            <!-- Participant's Photo or Silhouette Placeholder -->
+            @if($peserta->pendaftaran && $peserta->pendaftaran->file_foto && file_exists(public_path('storage/' . $peserta->pendaftaran->file_foto)))
+                <img src="{{ public_path('storage/' . $peserta->pendaftaran->file_foto) }}" style="position: absolute; top: 0; left: 0; width: 170pt; height: 220pt; object-fit: cover; border-radius: 8pt; z-index: 2;">
+            @else
+                <!-- Default Silhouette Placeholder (renders only if no photo upload exists) -->
                 <!-- White circle head -->
-                <div style="position: absolute; top: 40pt; left: 50pt; width: 70pt; height: 70pt; border-radius: 50%; background-color: #fff; z-index: 3;"></div>
+                <div style="position: absolute; top: 40pt; left: 50pt; width: 70pt; height: 70pt; border-radius: 50%; background-color: #fff; z-index: 2;"></div>
                 <!-- White arch body -->
-                <div style="position: absolute; bottom: 0; left: 20pt; width: 130pt; height: 75pt; border-radius: 65pt 65pt 0 0; background-color: #fff; z-index: 3;"></div>
+                <div style="position: absolute; bottom: 0; left: 20pt; width: 130pt; height: 75pt; border-radius: 65pt 65pt 0 0; background-color: #fff; z-index: 2;"></div>
             @endif
         </div>
 
-        <!-- Participant's Photo inside the Circle -->
-        @if($peserta->pendaftaran && $peserta->pendaftaran->file_foto && file_exists(public_path('storage/' . $peserta->pendaftaran->file_foto)))
-            <div class="photo-container">
-                <img class="photo-img" src="{{ public_path('storage/' . $peserta->pendaftaran->file_foto) }}">
-            </div>
-        @endif
-
         <!-- Row Nama -->
-        <table style="position: absolute; left: 45pt; top: 508pt; width: 310pt; border-collapse: collapse; z-index: 3; font-family: 'Helvetica Neue', Arial, sans-serif;">
+        <table style="position: absolute; left: 45pt; top: 522pt; width: 310pt; border-collapse: collapse; z-index: 3; font-family: 'Helvetica Neue', Arial, sans-serif;">
             <tr>
                 <td style="width: 80pt; font-size: 15pt; font-weight: bold; color: #0d2a4a; padding-bottom: 2px; vertical-align: bottom; line-height: 1;">Nama:</td>
                 <td style="font-size: 14.5pt; font-weight: bold; color: #000; border-bottom: 2.5px solid #0d2a4a; padding-bottom: 2px; vertical-align: bottom; text-align: left; line-height: 1;">
@@ -149,7 +129,7 @@
         </table>
 
         <!-- Row Delegasi -->
-        <table style="position: absolute; left: 45pt; top: 554pt; width: 310pt; border-collapse: collapse; z-index: 3; font-family: 'Helvetica Neue', Arial, sans-serif;">
+        <table style="position: absolute; left: 45pt; top: 568pt; width: 310pt; border-collapse: collapse; z-index: 3; font-family: 'Helvetica Neue', Arial, sans-serif;">
             <tr>
                 <td style="width: 80pt; font-size: 15pt; font-weight: bold; color: #0d2a4a; padding-bottom: 2px; vertical-align: bottom; line-height: 1;">Delegasi:</td>
                 <td style="font-size: 13.5pt; font-weight: bold; color: #000; border-bottom: 2.5px solid #0d2a4a; padding-bottom: 2px; vertical-align: bottom; text-align: left; line-height: 1;">
