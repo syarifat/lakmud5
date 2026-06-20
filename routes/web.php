@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\MateriController;
 use App\Http\Controllers\Admin\PemateriController;
 use App\Http\Controllers\Admin\KelompokController;
+use App\Http\Controllers\Admin\IdCardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -83,6 +84,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('user', UserController::class);
     Route::resource('pemateri', PemateriController::class);
     Route::resource('kelompok', KelompokController::class);
+
+    // Cetak ID Card
+    Route::get('/idcard', [IdCardController::class, 'index'])->name('idcard.index');
+    Route::get('/idcard/download-all', [IdCardController::class, 'downloadAll'])->name('idcard.download-all');
+    Route::get('/idcard/{id}/download', [IdCardController::class, 'download'])->name('idcard.download');
 
     // Manajemen Jadwal
     Route::get('/jadwal', [App\Http\Controllers\Admin\JadwalController::class, 'index'])->name('jadwal.index');
