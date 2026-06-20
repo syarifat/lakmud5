@@ -119,7 +119,7 @@
         </div>
 
         <!-- Row Nama -->
-        <table style="position: absolute; left: 45pt; top: 522pt; width: 310pt; border-collapse: collapse; z-index: 3; font-family: 'Helvetica Neue', Arial, sans-serif;">
+        <table style="position: absolute; left: 45pt; top: 548pt; width: 310pt; border-collapse: collapse; z-index: 3; font-family: 'Helvetica Neue', Arial, sans-serif;">
             <tr>
                 <td style="width: 80pt; font-size: 15pt; font-weight: bold; color: #0d2a4a; padding-bottom: 2px; vertical-align: bottom; line-height: 1;">Nama:</td>
                 <td style="font-size: 14.5pt; font-weight: bold; color: #000; border-bottom: 2.5px solid #0d2a4a; padding-bottom: 2px; vertical-align: bottom; text-align: left; line-height: 1;">
@@ -129,7 +129,7 @@
         </table>
 
         <!-- Row Delegasi -->
-        <table style="position: absolute; left: 45pt; top: 568pt; width: 310pt; border-collapse: collapse; z-index: 3; font-family: 'Helvetica Neue', Arial, sans-serif;">
+        <table style="position: absolute; left: 45pt; top: 594pt; width: 310pt; border-collapse: collapse; z-index: 3; font-family: 'Helvetica Neue', Arial, sans-serif;">
             <tr>
                 <td style="width: 80pt; font-size: 15pt; font-weight: bold; color: #0d2a4a; padding-bottom: 2px; vertical-align: bottom; line-height: 1;">Delegasi:</td>
                 <td style="font-size: 13.5pt; font-weight: bold; color: #000; border-bottom: 2.5px solid #0d2a4a; padding-bottom: 2px; vertical-align: bottom; text-align: left; line-height: 1;">
