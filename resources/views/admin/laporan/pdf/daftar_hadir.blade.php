@@ -65,7 +65,6 @@
             vertical-align: middle;
         }
         .main-table th {
-            background-color: #f2f2f2;
             font-weight: bold;
             text-align: center;
         }
@@ -73,14 +72,14 @@
             text-align: center;
         }
         .signature-container {
-            height: 35px;
-            display: block;
-            text-align: left;
+            height: 32px;
+            display: inline-block;
+            vertical-align: middle;
         }
         .signature-container svg {
-            height: 35px;
+            height: 32px;
             width: auto;
-            max-width: 120px;
+            max-width: 100px;
         }
         .placeholder-sig {
             font-size: 9pt;
@@ -115,26 +114,22 @@
     </table>
 
     <div class="header" style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
-        <h1 style="font-size: 12pt; font-weight: bold; text-transform: uppercase;">DAFTAR HADIR PESERTA</h1>
-        <h2 style="font-size: 11pt; font-weight: bold; text-transform: uppercase; margin-top: 3px; color: #444;">LATIHAN KADER MUDA</h2>
+        <h1 style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin: 0;">DAFTAR HADIR PESERTA</h1>
+        <h2 style="font-size: 11pt; font-weight: bold; text-transform: uppercase; margin-top: 4px; margin-bottom: 0; color: #000;">LATIHAN KADER MUDA</h2>
+        <h3 style="font-size: 11pt; font-weight: bold; text-transform: uppercase; margin-top: 4px; margin-bottom: 0; color: #000;">PAC IPNU IPPNU KAUMAN</h3>
     </div>
 
-    <div class="meta-container">
+    <div class="meta-container" style="margin-bottom: 15px; font-size: 10pt; font-weight: bold; color: #000;">
         <table class="meta-table">
             <tr>
-                <td class="label">Nama Pemateri</td>
-                <td class="separator">:</td>
-                <td>{{ $jadwal->pemateri->nama }}</td>
+                <td class="label" style="width: 130px; font-weight: bold; padding: 2px 0;">Nama Pemateri</td>
+                <td class="separator" style="width: 20px; font-weight: bold; padding: 2px 0;">:</td>
+                <td style="font-weight: bold; padding: 2px 0;">{{ $jadwal->pemateri->nama }}</td>
             </tr>
             <tr>
-                <td class="label">Materi</td>
-                <td class="separator">:</td>
-                <td>{{ $jadwal->materi->nama_materi }}</td>
-            </tr>
-            <tr>
-                <td class="label">Waktu / Sesi</td>
-                <td class="separator">:</td>
-                <td>{{ \Carbon\Carbon::parse($jadwal->waktu_mulai)->translatedFormat('l, d F Y (H:i') }} - {{ \Carbon\Carbon::parse($jadwal->waktu_selesai)->format('H:i') }})</td>
+                <td class="label" style="font-weight: bold; padding: 2px 0;">Materi</td>
+                <td class="separator" style="font-weight: bold; padding: 2px 0;">:</td>
+                <td style="font-weight: bold; padding: 2px 0;">{{ $jadwal->materi->nama_materi }}</td>
             </tr>
         </table>
     </div>
@@ -168,17 +163,39 @@
                     <td class="text-center">{{ $index + 1 }}.</td>
                     <td>{{ $peserta->name }}</td>
                     <td>{{ $pendaftaran ? $pendaftaran->delegasi : '-' }}</td>
-                    <td>
+                    <td style="height: 38px; padding: 2px 8px; vertical-align: middle;">
                         @if($hasAbsen)
-                            @if($sigSvg)
-                                <div class="signature-container">
-                                    {!! $sigSvg !!}
+                            @if(($index + 1) % 2 != 0)
+                                <!-- Ganjil (Kiri) -->
+                                <div style="text-align: left; padding-left: 5px;">
+                                    <span style="font-size: 9.5pt; margin-right: 8px; color: #000; vertical-align: middle;">{{ $index + 1 }}.</span>
+                                    <div class="signature-container">
+                                        @if($sigSvg)
+                                            {!! $sigSvg !!}
+                                        @else
+                                            <span style="font-family: 'Brush Script MT', 'Pacifico', cursive; font-size: 13pt; color: #000080; font-style: italic; font-weight: normal; vertical-align: middle; display: inline-block; transform: rotate(-2deg); white-space: nowrap;">{{ $peserta->name }}</span>
+                                        @endif
+                                    </div>
                                 </div>
                             @else
-                                <span class="placeholder-sig" style="color: green; font-weight: bold;">✔ Hadir</span>
+                                <!-- Genap (Kanan) -->
+                                <div style="text-align: right; padding-right: 15px;">
+                                    <div class="signature-container" style="text-align: left;">
+                                        @if($sigSvg)
+                                            {!! $sigSvg !!}
+                                        @else
+                                            <span style="font-family: 'Brush Script MT', 'Pacifico', cursive; font-size: 13pt; color: #000080; font-style: italic; font-weight: normal; vertical-align: middle; display: inline-block; transform: rotate(-2deg); white-space: nowrap;">{{ $peserta->name }}</span>
+                                        @endif
+                                    </div>
+                                    <span style="font-size: 9.5pt; margin-left: 8px; color: #000; vertical-align: middle;">{{ $index + 1 }}.</span>
+                                </div>
                             @endif
                         @else
-                            <span class="placeholder-sig">{{ $index + 1 }}. ....................</span>
+                            @if(($index + 1) % 2 != 0)
+                                <div style="text-align: left; padding-left: 5px; font-size: 9.5pt;">{{ $index + 1 }}.</div>
+                            @else
+                                <div style="text-align: right; padding-right: 15px; font-size: 9.5pt;">{{ $index + 1 }}.</div>
+                            @endif
                         @endif
                     </td>
                 </tr>

@@ -45,7 +45,7 @@ class LaporanController extends Controller
                 $pemateri = Pemateri::with(['riwayatPendidikans', 'riwayatOrganisasis'])->findOrFail($request->pemateri_id);
                 
                 $pdf = Pdf::loadView('admin.laporan.pdf.cv_pemateri', compact('pemateri'));
-                return $pdf->download('01_CV_Pemateri_' . str_replace(' ', '_', $pemateri->nama) . '.pdf');
+                return $this->downloadPdf($pdf, '01_CV_Pemateri_' . $pemateri->nama . '.pdf');
 
             case 'daftar_hadir':
                 $request->validate(['jadwal_id' => 'required|exists:jadwals,id']);
@@ -60,7 +60,7 @@ class LaporanController extends Controller
                     ->get();
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.daftar_hadir', compact('jadwal', 'pesertas'));
-                return $pdf->download('02_Daftar_Hadir_' . str_replace(' ', '_', $jadwal->materi->nama_materi) . '.pdf');
+                return $this->downloadPdf($pdf, '02_Daftar_Hadir_' . $jadwal->materi->nama_materi . '.pdf');
 
             case 'penilaian_peserta':
                 $request->validate(['jadwal_id' => 'required|exists:jadwals,id']);
@@ -74,7 +74,7 @@ class LaporanController extends Controller
                     ->get();
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_peserta', compact('jadwal', 'pesertas'));
-                return $pdf->download('03_Penilaian_Peserta_' . str_replace(' ', '_', $jadwal->materi->nama_materi) . '.pdf');
+                return $this->downloadPdf($pdf, '03_Penilaian_Peserta_' . $jadwal->materi->nama_materi . '.pdf');
 
             case 'observasi_harian':
                 $request->validate([
@@ -91,7 +91,7 @@ class LaporanController extends Controller
                     ->keyBy('peserta_id');
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.observasi_harian', compact('kelompok', 'pesertas', 'hari_ke', 'observasis'));
-                return $pdf->download('04_Observasi_Harian_Kelompok_' . str_replace(' ', '_', $kelompok->nama_kelompok) . '_Hari_' . $hari_ke . '.pdf');
+                return $this->downloadPdf($pdf, '04_Observasi_Harian_Kelompok_' . $kelompok->nama_kelompok . '_Hari_' . $hari_ke . '.pdf');
 
             case 'nilai_pemateri':
                 $request->validate(['peserta_id' => 'required|exists:users,id']);
@@ -106,7 +106,7 @@ class LaporanController extends Controller
                     ->keyBy('jadwal_id');
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_pemateri_oleh_peserta', compact('peserta', 'jadwals', 'ratings'));
-                return $pdf->download('05_Penilaian_Pemateri_Oleh_' . str_replace(' ', '_', $peserta->name) . '.pdf');
+                return $this->downloadPdf($pdf, '05_Penilaian_Pemateri_Oleh_' . $peserta->name . '.pdf');
 
             case 'nilai_inspel':
                 $request->validate(['peserta_id' => 'required|exists:users,id']);
@@ -121,7 +121,7 @@ class LaporanController extends Controller
                     ->keyBy('inspel_id');
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_inspel_oleh_peserta', compact('peserta', 'inspels', 'ratings'));
-                return $pdf->download('06_Penilaian_Inspel_Oleh_' . str_replace(' ', '_', $peserta->name) . '.pdf');
+                return $this->downloadPdf($pdf, '06_Penilaian_Inspel_Oleh_' . $peserta->name . '.pdf');
 
             case 'evaluasi_refleksi':
                 $request->validate([
@@ -136,7 +136,7 @@ class LaporanController extends Controller
                     ->first();
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.evaluasi_refleksi_peserta', compact('peserta', 'hari_ke', 'evaluasi'));
-                return $pdf->download('07_Evaluasi_Refleksi_Peserta_' . str_replace(' ', '_', $peserta->name) . '_Hari_' . $hari_ke . '.pdf');
+                return $this->downloadPdf($pdf, '07_Evaluasi_Refleksi_Peserta_' . $peserta->name . '_Hari_' . $hari_ke . '.pdf');
 
             case 'soal_prepost':
                 $materi_id = $request->materi_id;
@@ -153,10 +153,19 @@ class LaporanController extends Controller
                 $questions = BankSoal::whereIn('materi_id', $materis->pluck('id'))->get()->groupBy('materi_id');
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.soal_prepost', compact('materis', 'questions'));
-                return $pdf->download('08_Soal_Pretest_Posttest.pdf');
+                return $this->downloadPdf($pdf, '08_Soal_Pretest_Posttest.pdf');
 
             default:
                 return abort(404, 'Jenis laporan tidak valid.');
         }
+    }
+
+    private function downloadPdf($pdf, $filename)
+    {
+        $cleanFilename = preg_replace('/[^A-Za-z0-9_\-\.]/', '', str_replace(' ', '_', $filename));
+        return response($pdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="' . $cleanFilename . '"',
+        ]);
     }
 }

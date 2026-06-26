@@ -43,7 +43,18 @@ class PemateriController extends Controller
             $data['foto'] = $request->file('foto')->store('pemateri', 'public');
         }
 
-        Pemateri::create($data);
+        $pemateri = Pemateri::create($data);
+
+        if ($pemateri->materi_id) {
+            \App\Models\Jadwal::updateOrCreate(
+                ['pemateri_id' => $pemateri->id],
+                [
+                    'materi_id' => $pemateri->materi_id,
+                    'waktu_mulai' => now(),
+                    'waktu_selesai' => now(),
+                ]
+            );
+        }
 
         return redirect()->route('admin.pemateri.index')->with('status', 'Data Pemateri berhasil ditambahkan.');
     }
@@ -81,6 +92,19 @@ class PemateriController extends Controller
 
         $pemateri->update($data);
 
+        if ($pemateri->materi_id) {
+            \App\Models\Jadwal::updateOrCreate(
+                ['pemateri_id' => $pemateri->id],
+                [
+                    'materi_id' => $pemateri->materi_id,
+                    'waktu_mulai' => now(),
+                    'waktu_selesai' => now(),
+                ]
+            );
+        } else {
+            \App\Models\Jadwal::where('pemateri_id', $pemateri->id)->delete();
+        }
+
         return redirect()->route('admin.pemateri.index')->with('status', 'Data Pemateri berhasil diperbarui.');
     }
 
@@ -89,6 +113,9 @@ class PemateriController extends Controller
         if ($pemateri->foto) {
             Storage::disk('public')->delete($pemateri->foto);
         }
+
+        \App\Models\Jadwal::where('pemateri_id', $pemateri->id)->delete();
+
         $pemateri->delete();
         return redirect()->route('admin.pemateri.index')->with('status', 'Data Pemateri berhasil dihapus.');
     }
