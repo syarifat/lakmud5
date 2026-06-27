@@ -91,7 +91,10 @@
                 Lupa password? Silakan hubungi panitia.
             </p>
             <p class="text-sm font-medium text-gray-500 pt-2 border-t border-gray-200">
-                Belum mendaftar? <a href="/daftar-lakmud" class="font-bold text-emerald-600 hover:text-emerald-700 transition-colors hover:underline underline-offset-2">Daftar sekarang</a>
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-red-500 bg-red-50 border border-red-100 rounded-full px-3 py-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                    Pendaftaran sudah ditutup
+                </span>
             </p>
         </div>
     </div>

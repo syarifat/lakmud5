@@ -18,9 +18,12 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-// ROUTE PUBLIK UNTUK PENDAFTARAN
-Route::get('/daftar-lakmud', [PendaftaranController::class, 'index'])->name('pendaftar.biodata');
-Route::post('/daftar-lakmud', [PendaftaranController::class, 'store'])->name('pendaftar.store');
+// ROUTE PUBLIK UNTUK PENDAFTARAN — ditutup
+// Route::get('/daftar-lakmud', [PendaftaranController::class, 'index'])->name('pendaftar.biodata');
+// Route::post('/daftar-lakmud', [PendaftaranController::class, 'store'])->name('pendaftar.store');
+Route::match(['get','post'], '/daftar-lakmud', function () {
+    return view('pendaftaran.ditutup');
+})->name('pendaftar.biodata');
 // ==========================================
 // PENGELOMPOKAN ROUTE BERDASARKAN ROLE
 // ==========================================
