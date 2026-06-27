@@ -153,11 +153,11 @@
                     <td>{{ $rating ? $rating->catatan_khusus : '' }}</td>
                     
                     <!-- Nilai check -->
-                    <td class="text-center">{{ ($rating && $rating->nilai == 50) ? '√' : '' }}</td>
-                    <td class="text-center">{{ ($rating && $rating->nilai == 60) ? '√' : '' }}</td>
-                    <td class="text-center">{{ ($rating && $rating->nilai == 70) ? '√' : '' }}</td>
-                    <td class="text-center">{{ ($rating && $rating->nilai == 80) ? '√' : '' }}</td>
-                    <td class="text-center">{{ ($rating && $rating->nilai == 90) ? '√' : '' }}</td>
+                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 50) ? '✓' : '' }}</td>
+                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 60) ? '✓' : '' }}</td>
+                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 70) ? '✓' : '' }}</td>
+                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 80) ? '✓' : '' }}</td>
+                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 90) ? '✓' : '' }}</td>
                 </tr>
             @endforeach
         </tbody>

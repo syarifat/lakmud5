@@ -23,6 +23,11 @@ class Pemateri extends Model
         return $this->hasMany(RiwayatOrganisasi::class);
     }
 
+    public function riwayatPengkaderans()
+    {
+        return $this->hasMany(RiwayatPengkaderan::class);
+    }
+
     public function jadwals()
     {
         return $this->hasMany(Jadwal::class);

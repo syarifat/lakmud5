@@ -177,14 +177,6 @@
                                                     <span class="px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold rounded-full">
                                                         Belum Absen
                                                     </span>
-                                                    
-                                                    <form method="POST" action="{{ route('peserta.absensi.tap') }}">
-                                                        @csrf
-                                                        <input type="hidden" name="jadwal_id" value="{{ $j->id }}">
-                                                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg transition shadow-sm">
-                                                            Simulasi Tap
-                                                        </button>
-                                                    </form>
                                                 @endif
                                             </div>
                                         </div>
@@ -245,8 +237,8 @@
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                                 </div>
                                 <div class="text-left">
-                                    <p class="font-bold text-sm text-gray-900 group-hover:text-purple-800">Ujian CBT (Pre/Post)</p>
-                                    <p class="text-xs text-gray-500">Ujian pretest dan posttest materi</p>
+                                    <p class="font-bold text-sm text-gray-900 group-hover:text-purple-800">Upload Jawaban Pre/Post Test</p>
+                                    <p class="text-xs text-gray-500">Unggah berkas lembar jawaban ujian</p>
                                 </div>
                             </a>
                         </div>

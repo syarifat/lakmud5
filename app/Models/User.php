@@ -32,6 +32,11 @@ class User extends Authenticatable
         return $this->hasMany(Absensi::class, 'peserta_id');
     }
 
+    public function penilaianPesertas()
+    {
+        return $this->hasMany(PenilaianPeserta::class, 'peserta_id');
+    }
+
     public function kelompoks()
     {
         return $this->belongsToMany(Kelompok::class, 'peserta_kelompoks', 'peserta_id', 'kelompok_id');

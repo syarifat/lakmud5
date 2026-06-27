@@ -49,7 +49,7 @@
                             Metode presensi utama dilakukan menggunakan **Kartu RFID** yang dipasang pada ID Card Anda. Silakan tempelkan kartu pada alat *RFID Reader* yang dibawa oleh panitia atau diletakkan di meja depan sebelum sesi materi dimulai.
                         </p>
                         <p class="text-xs text-amber-600 bg-amber-50 p-3 rounded-lg border border-amber-200 font-medium">
-                            💡 <strong>Catatan Cadangan:</strong> Jika sistem RFID mengalami kendala teknis, Anda dapat melakukan **Absensi Mandiri (Simulasi Tap)** menggunakan tombol yang tersedia di daftar jadwal berikut saat sesi materi sedang berjalan.
+                            💡 <strong>Catatan:</strong> Jika sistem RFID mengalami kendala teknis atau presensi Anda belum tercatat, silakan laporkan langsung ke panitia atau pendamping agar kehadiran Anda dapat dibantu konfirmasi secara manual.
                         </p>
                     </div>
                 </div>
@@ -100,7 +100,6 @@
                                     <th scope="col" class="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Materi & Pemateri</th>
                                     <th scope="col" class="px-6 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Jadwal Sesi</th>
                                     <th scope="col" class="px-6 py-3.5 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">Status Kehadiran</th>
-                                    <th scope="col" class="px-6 py-3.5 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">Aksi Cadangan</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-100">
@@ -142,20 +141,7 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <!-- Aksi -->
-                                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                            @if(!$j->is_hadir)
-                                                <form method="POST" action="{{ route('peserta.absensi.tap') }}">
-                                                    @csrf
-                                                    <input type="hidden" name="jadwal_id" value="{{ $j->id }}">
-                                                    <button type="submit" class="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2 rounded-xl transition shadow-sm hover:shadow">
-                                                        Absen Mandiri
-                                                    </button>
-                                                </form>
-                                            @else
-                                                <span class="text-xs text-gray-400">-</span>
-                                            @endif
-                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>

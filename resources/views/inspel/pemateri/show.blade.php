@@ -20,7 +20,7 @@
                 </div>
                 <div class="text-center sm:text-left">
                     <h3 class="text-2xl font-extrabold text-gray-950">{{ $data->nama }}</h3>
-                    <p class="text-sm text-gray-500 font-medium mt-1">{{ $data->pekerjaan }}</p>
+                    <p class="text-sm text-gray-500 font-medium mt-1">{{ $data->email ?? '-' }}</p>
                     <span class="inline-block mt-3 px-3 py-1 bg-gray-100 text-gray-750 text-xs font-semibold rounded-full">
                         Motto: "{{ $data->motto }}"
                     </span>
@@ -47,8 +47,12 @@
                             <span class="font-semibold text-gray-800 leading-relaxed">{{ $data->alamat }}</span>
                         </div>
                         <div>
-                            <span class="text-xs text-gray-400 block">Hobi</span>
-                            <span class="font-semibold text-gray-800">{{ $data->hobi }}</span>
+                            <span class="text-xs text-gray-400 block">Instagram</span>
+                            <span class="font-semibold text-indigo-600">{{ $data->instagram ?? '-' }}</span>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400 block">Email</span>
+                            <span class="font-semibold text-gray-800">{{ $data->email ?? '-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -89,6 +93,26 @@
                                         <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-rose-500 rounded-full border border-white"></div>
                                         <div class="text-sm font-bold text-gray-900">{{ $ro->nama_organisasi }}</div>
                                         <div class="text-xs text-gray-500 mt-0.5">{{ $ro->jabatan }} &bull; Tahun {{ $ro->tahun }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Riwayat Pengkaderan -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                        <h4 class="font-bold text-gray-900 border-b border-gray-100 pb-3 mb-4 flex items-center gap-2">
+                            🎖️ Riwayat Pengkaderan
+                        </h4>
+                        @if($data->riwayatPengkaderans->isEmpty())
+                            <p class="text-sm text-gray-500 italic">Tidak ada data riwayat pengkaderan.</p>
+                        @else
+                            <div class="relative border-l-2 border-indigo-100 ml-3 space-y-6 py-1">
+                                @foreach($data->riwayatPengkaderans as $pk)
+                                    <div class="relative pl-5">
+                                        <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-indigo-500 rounded-full border border-white"></div>
+                                        <div class="text-sm font-bold text-gray-900">{{ $pk->nama }}</div>
+                                        <div class="text-xs text-gray-500 mt-0.5">{{ $pk->tingkat }} &bull; Tahun {{ $pk->tahun }}</div>
                                     </div>
                                 @endforeach
                             </div>

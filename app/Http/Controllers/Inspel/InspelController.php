@@ -44,7 +44,7 @@ class InspelController extends Controller
 
     public function pemateriShow($id)
     {
-        $data = Pemateri::with(['riwayatPendidikans', 'riwayatOrganisasis'])->findOrFail($id);
+        $data = Pemateri::with(['riwayatPendidikans', 'riwayatOrganisasis', 'riwayatPengkaderans'])->findOrFail($id);
         return view('inspel.pemateri.show', compact('data'));
     }
 
@@ -110,11 +110,11 @@ class InspelController extends Controller
         $request->validate([
             'jadwal_id' => 'required|exists:jadwals,id',
             'pemahaman' => 'required|array',
-            'pemahaman.*' => 'required|integer|between:0,100',
+            'pemahaman.*' => 'required|integer|between:70,100',
             'kedisiplinan' => 'required|array',
-            'kedisiplinan.*' => 'required|integer|between:0,100',
+            'kedisiplinan.*' => 'required|integer|between:70,100',
             'keaktifan' => 'required|array',
-            'keaktifan.*' => 'required|integer|between:0,100',
+            'keaktifan.*' => 'required|integer|between:70,100',
         ]);
 
         $inspelId = Auth::id();

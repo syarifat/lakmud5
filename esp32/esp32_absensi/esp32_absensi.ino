@@ -32,7 +32,7 @@ const char* ssid = "Matahary 2.4G";
 const char* password = "kebunanggur";
 
 // Server Address
-const char* serverUrl = "https://e228-203-78-117-238.ngrok-free.app"; 
+const char* serverUrl = "https://5367-103-169-135-11.ngrok-free.app"; 
 
 // Pin Definitions
 #define PIN_BTN_PREV 25

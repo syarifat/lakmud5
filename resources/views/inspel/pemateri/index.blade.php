@@ -28,7 +28,7 @@
                                         </div>
                                         <div>
                                             <h4 class="font-bold text-gray-900 text-base">{{ $p->nama }}</h4>
-                                            <p class="text-xs text-gray-500">{{ $p->pekerjaan }}</p>
+                                            <p class="text-xs text-slate-400 font-semibold">{{ $p->email ?? '-' }}</p>
                                         </div>
                                     </div>
                                     <hr class="border-gray-200">

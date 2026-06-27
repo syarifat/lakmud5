@@ -31,16 +31,19 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <img src="{{ $p->foto ? asset('storage/' . $p->foto) : 'https://ui-avatars.com/api/?name='.urlencode($p->nama) }}" class="h-10 w-10 rounded-full object-cover border">
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $p->nama }}</div>
-                                <div class="text-xs text-gray-500">{{ $p->jabatan ?? '-' }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800">
-                                    {{ $p->materi?->nama_materi ?? 'Belum Ditentukan' }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $p->no_telp }}</td>
+                             <td class="px-6 py-4 whitespace-nowrap">
+                                 <div class="text-sm font-medium text-gray-900">{{ $p->nama }}</div>
+                                 <div class="text-xs text-slate-400 font-semibold">{{ $p->email ?? '-' }}</div>
+                             </td>
+                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800">
+                                     {{ $p->materi?->nama_materi ?? 'Belum Ditentukan' }}
+                                 </span>
+                             </td>
+                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                 <div class="font-medium text-slate-800">{{ $p->no_telp }}</div>
+                                 <div class="text-xs text-indigo-600 font-semibold">{{ $p->instagram ?? '-' }}</div>
+                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-3">
                                 <a href="{{ route('admin.pemateri.edit', $p->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 <form action="{{ route('admin.pemateri.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Hapus pemateri ini?')">

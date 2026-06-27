@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <div>
-                <span class="text-xs uppercase font-extrabold tracking-widest text-emerald-600 block mb-1">Pengerjaan Ujian CBT</span>
+                <span class="text-xs uppercase font-extrabold tracking-widest text-emerald-600 block mb-1">Unggah Jawaban Ujian</span>
                 <h2 class="font-bold text-xl text-gray-800 leading-tight">
                     {{ $materi->nama_materi }}
                 </h2>
@@ -17,10 +17,10 @@
     </x-slot>
 
     <div class="py-10" x-data="{ openConfirm: false }">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8 space-y-8">
             
             <!-- Warning Box -->
-            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-2xl shadow-sm mb-8">
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-2xl shadow-sm">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <svg class="h-5 w-5 text-amber-500" viewBox="0 0 20 20" fill="currentColor">
@@ -28,46 +28,63 @@
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <h4 class="text-sm font-bold text-amber-800">Petunjuk Penting Pengerjaan:</h4>
+                        <h4 class="text-sm font-bold text-amber-800">Petunjuk Pengunggahan:</h4>
                         <ul class="text-xs text-amber-700 list-disc pl-4 mt-1 space-y-1">
-                            <li>Bacalah pertanyaan dengan teliti sebelum menjawab.</li>
-                            <li>Tuliskan jawaban dalam bentuk esai/uraian singkat pada kolom yang telah disediakan.</li>
-                            <li>Jangan me-refresh atau menutup halaman ini sebelum menekan tombol <strong>Kirim Jawaban</strong> untuk menghindari hilangnya jawaban Anda.</li>
+                            <li>Kerjakan pertanyaan Pre-Test / Post-Test pada kertas fisik secara manual sesuai instruksi panitia.</li>
+                            <li>Foto lembar jawaban Anda dengan jelas (atau jadikan berkas PDF) lalu pilih berkas tersebut di bawah.</li>
+                            <li>Klik tombol **Kirim Jawaban** untuk mengunggah lembar jawaban ke sistem.</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
+            @if($existingJawaban)
+                <!-- Current Upload Status -->
+                <div class="bg-white rounded-2xl shadow-sm border border-emerald-100 p-6 sm:p-8 space-y-4 hover:shadow-md transition">
+                    <div class="flex items-center gap-2 border-b border-gray-100 pb-3">
+                        <div class="p-1.5 bg-emerald-50 text-emerald-600 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <span class="text-sm font-bold text-emerald-800">Berkas Jawaban Anda Saat Ini</span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div>
+                            <p class="text-xs text-gray-500">Waktu Unggah Terakhir:</p>
+                            <p class="text-sm font-semibold text-gray-850">{{ $existingJawaban->created_at->translatedFormat('d F Y, H:i') }} WIB</p>
+                        </div>
+                        <a href="{{ asset($existingJawaban->jawaban) }}" target="_blank"
+                            class="inline-flex items-center justify-center bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs px-4 py-2 rounded-xl border border-indigo-200 transition shadow-sm">
+                            Lihat Berkas Anda
+                        </a>
+                    </div>
+                </div>
+            @endif
+
             <!-- Exam Form -->
             <form id="ujianForm" method="POST" action="{{ route('peserta.ujian.store', ['materi_id' => $materi->id]) }}" 
-                @submit.prevent="openConfirm = true" class="space-y-8">
+                enctype="multipart/form-data" @submit.prevent="openConfirm = true" class="space-y-8">
                 @csrf
                 <input type="hidden" name="tipe" value="{{ $tipe }}">
 
-                <!-- Questions List -->
-                @foreach($soals as $index => $soal)
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 space-y-4 hover:shadow-md transition">
-                        <div class="flex items-start gap-4">
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gray-100 text-gray-700 font-bold text-sm flex-shrink-0">
-                                {{ $index + 1 }}
-                            </span>
-                            <div class="text-sm sm:text-base font-semibold text-gray-800 leading-relaxed pt-1">
-                                {!! nl2br(e($soal->pertanyaan)) !!}
-                            </div>
+                <!-- Upload Card -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 space-y-6 hover:shadow-md transition">
+                    <div class="flex items-center gap-2 border-b border-gray-100 pb-3">
+                        <div class="p-1.5 bg-emerald-50 text-emerald-600 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         </div>
-
-                        <div class="pl-0 sm:pl-12">
-                            <label for="jawaban_{{ $soal->id }}" class="sr-only">Jawaban Anda</label>
-                            <textarea id="jawaban_{{ $soal->id }}" name="jawaban[{{ $soal->id }}]" rows="5" required
-                                class="w-full text-sm rounded-xl border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 placeholder-gray-400"
-                                placeholder="Ketik jawaban esai rekan/rekanita di sini secara lengkap..."></textarea>
-                        </div>
+                        <span class="text-sm font-bold text-gray-800">Pilih Lembar Jawaban Baru</span>
                     </div>
-                @endforeach
+
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-gray-600">Pilih Berkas Foto / PDF Lembar Jawaban (Maks 10MB)</label>
+                        <input type="file" name="foto_jawaban" accept="image/*,application/pdf" required
+                            class="w-full text-sm rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 p-2 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                    </div>
+                </div>
 
                 <!-- Action buttons -->
                 <div class="flex items-center justify-between pt-4">
-                    <a href="{{ route('peserta.ujian') }}" class="inline-flex items-center justify-center bg-gray-150 hover:bg-gray-200 text-gray-700 font-bold text-sm px-6 py-3 rounded-xl transition border border-gray-200 shadow-sm">
+                    <a href="{{ route('peserta.ujian') }}" class="inline-flex items-center justify-center bg-gray-150 hover:bg-gray-200 text-gray-700 font-bold text-sm px-6 py-3 rounded-xl transition border border-gray-250 shadow-sm">
                         Batal
                     </a>
                     <button type="submit" class="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-8 py-3 rounded-xl transition shadow-md hover:shadow-lg">
@@ -98,11 +115,11 @@
                                 </div>
                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                     <h3 class="text-lg leading-6 font-extrabold text-gray-900" id="modal-title">
-                                        Konfirmasi Kirim Jawaban
+                                        Konfirmasi Unggah Jawaban
                                     </h3>
                                     <div class="mt-2">
                                         <p class="text-sm text-gray-500">
-                                            Apakah Anda yakin ingin mengirim semua jawaban ujian ini? Jawaban yang sudah dikirim **tidak dapat diubah kembali**.
+                                            Apakah Anda yakin ingin mengunggah lembar jawaban ujian ini? Lembar jawaban lama (jika ada) akan digantikan dengan yang baru.
                                         </p>
                                     </div>
                                 </div>
@@ -115,7 +132,7 @@
                                 </button>
                                 <button type="button" @click="openConfirm = false" 
                                     class="mt-3 w-full inline-flex justify-center rounded-xl border border-gray-300 shadow-sm px-4 py-2.5 bg-white text-base font-bold text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm">
-                                    Periksa Kembali
+                                    Batal
                                 </button>
                             </div>
                         </div>

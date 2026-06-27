@@ -26,24 +26,62 @@ class PemateriController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'materi_id' => 'nullable|exists:materis,id',
-            'jabatan' => 'nullable|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string',
-            'hobi' => 'required|string|max:255',
-            'motto' => 'required|string|max:255',
             'no_telp' => 'required|string|max:20',
-            'pekerjaan' => 'required|string|max:255',
+            'instagram' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'motto' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->except(['pendidikan', 'organisasi', 'pengkaderan']);
 
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('pemateri', 'public');
         }
 
         $pemateri = Pemateri::create($data);
+
+        // Sync Riwayat Pendidikan
+        if ($request->pendidikan) {
+            foreach ($request->pendidikan as $tingkat => $p) {
+                if (!empty($p['sekolah']) && !empty($p['tahun'])) {
+                    $pemateri->riwayatPendidikans()->create([
+                        'jenjang' => $tingkat,
+                        'nama_sekolah' => $p['sekolah'],
+                        'tahun' => $p['tahun'],
+                    ]);
+                }
+            }
+        }
+
+        // Sync Riwayat Organisasi
+        if ($request->organisasi) {
+            foreach ($request->organisasi as $org) {
+                if (!empty($org['nama']) && !empty($org['jabatan']) && !empty($org['tahun'])) {
+                    $pemateri->riwayatOrganisasis()->create([
+                        'nama_organisasi' => $org['nama'],
+                        'jabatan' => $org['jabatan'],
+                        'tahun' => $org['tahun'],
+                    ]);
+                }
+            }
+        }
+
+        // Sync Riwayat Pengkaderan
+        if ($request->pengkaderan) {
+            foreach ($request->pengkaderan as $pk) {
+                if (!empty($pk['tingkat']) && !empty($pk['nama']) && !empty($pk['tahun'])) {
+                    $pemateri->riwayatPengkaderans()->create([
+                        'tingkat' => $pk['tingkat'],
+                        'nama' => $pk['nama'],
+                        'tahun' => $pk['tahun'],
+                    ]);
+                }
+            }
+        }
 
         if ($pemateri->materi_id) {
             \App\Models\Jadwal::updateOrCreate(
@@ -62,6 +100,8 @@ class PemateriController extends Controller
     public function edit(Pemateri $pemateri)
     {
         $materis = \App\Models\Materi::orderBy('nama_materi')->get();
+        // Load relationships
+        $pemateri->load(['riwayatPendidikans', 'riwayatOrganisasis', 'riwayatPengkaderans']);
         return view('admin.pemateri.edit', compact('pemateri', 'materis'));
     }
 
@@ -70,18 +110,17 @@ class PemateriController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'materi_id' => 'nullable|exists:materis,id',
-            'jabatan' => 'nullable|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string',
-            'hobi' => 'required|string|max:255',
-            'motto' => 'required|string|max:255',
             'no_telp' => 'required|string|max:20',
-            'pekerjaan' => 'required|string|max:255',
+            'instagram' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'motto' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->except(['pendidikan', 'organisasi', 'pengkaderan']);
 
         if ($request->hasFile('foto')) {
             if ($pemateri->foto) {
@@ -91,6 +130,48 @@ class PemateriController extends Controller
         }
 
         $pemateri->update($data);
+
+        // Sync Riwayat Pendidikan (re-create)
+        $pemateri->riwayatPendidikans()->delete();
+        if ($request->pendidikan) {
+            foreach ($request->pendidikan as $tingkat => $p) {
+                if (!empty($p['sekolah']) && !empty($p['tahun'])) {
+                    $pemateri->riwayatPendidikans()->create([
+                        'jenjang' => $tingkat,
+                        'nama_sekolah' => $p['sekolah'],
+                        'tahun' => $p['tahun'],
+                    ]);
+                }
+            }
+        }
+
+        // Sync Riwayat Organisasi (re-create)
+        $pemateri->riwayatOrganisasis()->delete();
+        if ($request->organisasi) {
+            foreach ($request->organisasi as $org) {
+                if (!empty($org['nama']) && !empty($org['jabatan']) && !empty($org['tahun'])) {
+                    $pemateri->riwayatOrganisasis()->create([
+                        'nama_organisasi' => $org['nama'],
+                        'jabatan' => $org['jabatan'],
+                        'tahun' => $org['tahun'],
+                    ]);
+                }
+            }
+        }
+
+        // Sync Riwayat Pengkaderan (re-create)
+        $pemateri->riwayatPengkaderans()->delete();
+        if ($request->pengkaderan) {
+            foreach ($request->pengkaderan as $pk) {
+                if (!empty($pk['tingkat']) && !empty($pk['nama']) && !empty($pk['tahun'])) {
+                    $pemateri->riwayatPengkaderans()->create([
+                        'tingkat' => $pk['tingkat'],
+                        'nama' => $pk['nama'],
+                        'tahun' => $pk['tahun'],
+                    ]);
+                }
+            }
+        }
 
         if ($pemateri->materi_id) {
             \App\Models\Jadwal::updateOrCreate(

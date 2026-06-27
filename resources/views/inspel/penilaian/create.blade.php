@@ -23,6 +23,39 @@
                 </p>
             </div>
 
+            <!-- Instrumen Penilaian Info -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-4">
+                <div class="flex items-center gap-2 border-b border-gray-100 pb-3">
+                    <div class="p-1.5 bg-rose-50 text-rose-600 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <span class="text-sm font-bold text-gray-800">Instrumen Penilaian</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                        <span class="font-extrabold text-gray-900 block mb-1">📚 Pemahaman</span>
+                        <span class="text-gray-600 text-xs">Evaluasi materi (soal, resume)</span>
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                        <span class="font-extrabold text-gray-900 block mb-1">⏱️ Kedisiplinan</span>
+                        <span class="text-gray-600 text-xs">Absensi selama kegiatan, sikap (khusus LAKMUD)</span>
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                        <span class="font-extrabold text-gray-900 block mb-1">💬 Keaktifan</span>
+                        <span class="text-gray-600 text-xs">Bertanya, menjawab, menanggapi, dll.</span>
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                        <span class="font-extrabold text-gray-900 block mb-1">📊 Nilai Rerata</span>
+                        <span class="text-gray-600 text-xs">Hasil penjumlahan 3 unsur penilaian dibagi 3</span>
+                    </div>
+                    <div class="p-3 bg-rose-50/50 rounded-xl border border-rose-100">
+                        <span class="font-extrabold text-rose-900 block mb-1">🎯 Skala Nilai</span>
+                        <span class="text-rose-700 text-xs font-semibold">Rentang nilai: 70 - 100</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Formulir Penilaian Massal -->
             <form method="POST" action="{{ route('inspel.penilaian.store') }}">
                 @csrf
@@ -35,9 +68,9 @@
                                 <tr class="bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                                     <th scope="col" class="px-6 py-4 w-12">No</th>
                                     <th scope="col" class="px-6 py-4">Nama Peserta</th>
-                                    <th scope="col" class="px-6 py-4 text-center w-32">Pemahaman (0-100)</th>
-                                    <th scope="col" class="px-6 py-4 text-center w-32">Kedisiplinan (0-100)</th>
-                                    <th scope="col" class="px-6 py-4 text-center w-32">Keaktifan (0-100)</th>
+                                    <th scope="col" class="px-6 py-4 text-center w-32">Pemahaman (70-100)</th>
+                                    <th scope="col" class="px-6 py-4 text-center w-32">Kedisiplinan (70-100)</th>
+                                    <th scope="col" class="px-6 py-4 text-center w-32">Keaktifan (70-100)</th>
                                     <th scope="col" class="px-6 py-4 text-center w-32 bg-gray-100/50">Rerata Akhir</th>
                                 </tr>
                             </thead>
@@ -70,26 +103,26 @@
                                             
                                             <!-- Pemahaman -->
                                             <td class="px-6 py-4 text-center">
-                                                <input type="number" name="pemahaman[{{ $p->id }}]" min="0" max="100" required
+                                                <input type="number" name="pemahaman[{{ $p->id }}]" min="70" max="100" required
                                                     value="{{ $valPemahaman }}"
                                                     class="input-score w-20 text-center text-sm font-bold rounded-lg border-gray-200 focus:border-rose-500 focus:ring-rose-500 py-1.5"
-                                                    placeholder="0">
+                                                    placeholder="70">
                                             </td>
 
                                             <!-- Kedisiplinan -->
                                             <td class="px-6 py-4 text-center">
-                                                <input type="number" name="kedisiplinan[{{ $p->id }}]" min="0" max="100" required
+                                                <input type="number" name="kedisiplinan[{{ $p->id }}]" min="70" max="100" required
                                                     value="{{ $valKedisiplinan }}"
                                                     class="input-score w-20 text-center text-sm font-bold rounded-lg border-gray-200 focus:border-rose-500 focus:ring-rose-500 py-1.5"
-                                                    placeholder="0">
+                                                    placeholder="70">
                                             </td>
 
                                             <!-- Keaktifan -->
                                             <td class="px-6 py-4 text-center">
-                                                <input type="number" name="keaktifan[{{ $p->id }}]" min="0" max="100" required
+                                                <input type="number" name="keaktifan[{{ $p->id }}]" min="70" max="100" required
                                                     value="{{ $valKeaktifan }}"
                                                     class="input-score w-20 text-center text-sm font-bold rounded-lg border-gray-200 focus:border-rose-500 focus:ring-rose-500 py-1.5"
-                                                    placeholder="0">
+                                                    placeholder="70">
                                             </td>
 
                                             <!-- Rerata -->

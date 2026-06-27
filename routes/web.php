@@ -36,7 +36,6 @@ Route::middleware(['auth', 'role:pendaftar'])->prefix('pendaftaran')->name('pend
 Route::middleware(['auth', 'role:peserta'])->prefix('peserta')->name('peserta.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Peserta\PesertaController::class, 'dashboard'])->name('dashboard');
     Route::get('/absensi', [App\Http\Controllers\Peserta\PesertaController::class, 'absensi'])->name('absensi');
-    Route::post('/absensi/tap', [App\Http\Controllers\Peserta\PesertaController::class, 'tapAbsen'])->name('absensi.tap');
     Route::get('/nilai-pemateri', [App\Http\Controllers\Peserta\PesertaController::class, 'nilaiPemateriIndex'])->name('nilai-pemateri');
     Route::post('/nilai-pemateri/store', [App\Http\Controllers\Peserta\PesertaController::class, 'nilaiPemateriStore'])->name('nilai-pemateri.store');
     Route::get('/nilai-inspel', [App\Http\Controllers\Peserta\PesertaController::class, 'nilaiInspelIndex'])->name('nilai-inspel');
@@ -59,6 +58,12 @@ Route::middleware(['auth', 'role:inspel'])->prefix('inspel')->name('inspel.')->g
     Route::post('/penilaian/store', [App\Http\Controllers\Inspel\InspelController::class, 'penilaianStore'])->name('penilaian.store');
     Route::get('/refleksi', [App\Http\Controllers\Inspel\InspelController::class, 'refleksiIndex'])->name('refleksi');
     Route::get('/refleksi/{id}', [App\Http\Controllers\Inspel\InspelController::class, 'refleksiShow'])->name('refleksi.show');
+
+    // Rekap Laporan untuk Inspel
+    Route::get('/laporan', [App\Http\Controllers\Admin\LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/download', [App\Http\Controllers\Admin\LaporanController::class, 'download'])->name('laporan.download');
+    Route::get('/laporan/download-jawaban/{id}', [App\Http\Controllers\Admin\LaporanController::class, 'downloadJawaban'])->name('laporan.download-jawaban');
+    Route::get('/slide-cv', [App\Http\Controllers\Admin\LaporanController::class, 'slideCv'])->name('slide-cv');
 });
 
 // 4. Route Khusus Role: Pendamping
@@ -98,6 +103,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Laporan Total
     Route::get('/laporan', [App\Http\Controllers\Admin\LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/download', [App\Http\Controllers\Admin\LaporanController::class, 'download'])->name('laporan.download');
+    Route::get('/laporan/download-jawaban/{id}', [App\Http\Controllers\Admin\LaporanController::class, 'downloadJawaban'])->name('laporan.download-jawaban');
+    Route::get('/slide-cv', [App\Http\Controllers\Admin\LaporanController::class, 'slideCv'])->name('slide-cv');
 });
 
 // ==========================================

@@ -171,30 +171,30 @@
                                     <span style="font-size: 9.5pt; margin-right: 8px; color: #000; vertical-align: middle;">{{ $index + 1 }}.</span>
                                     <div class="signature-container">
                                         @if($sigSvg)
-                                            {!! $sigSvg !!}
+                                            <img src="data:image/svg+xml;base64,{{ base64_encode($sigSvg) }}" style="height: 32px; width: auto; vertical-align: middle;">
                                         @else
                                             <span style="font-family: 'Brush Script MT', 'Pacifico', cursive; font-size: 13pt; color: #000080; font-style: italic; font-weight: normal; vertical-align: middle; display: inline-block; transform: rotate(-2deg); white-space: nowrap;">{{ $peserta->name }}</span>
                                         @endif
                                     </div>
                                 </div>
                             @else
-                                <!-- Genap (Kanan) -->
-                                <div style="text-align: right; padding-right: 15px;">
-                                    <div class="signature-container" style="text-align: left;">
+                                <!-- Genap (Tengah) -->
+                                <div style="text-align: left; padding-left: 60px;">
+                                    <span style="font-size: 9.5pt; margin-right: 8px; color: #000; vertical-align: middle;">{{ $index + 1 }}.</span>
+                                    <div class="signature-container">
                                         @if($sigSvg)
-                                            {!! $sigSvg !!}
+                                            <img src="data:image/svg+xml;base64,{{ base64_encode($sigSvg) }}" style="height: 32px; width: auto; vertical-align: middle;">
                                         @else
                                             <span style="font-family: 'Brush Script MT', 'Pacifico', cursive; font-size: 13pt; color: #000080; font-style: italic; font-weight: normal; vertical-align: middle; display: inline-block; transform: rotate(-2deg); white-space: nowrap;">{{ $peserta->name }}</span>
                                         @endif
                                     </div>
-                                    <span style="font-size: 9.5pt; margin-left: 8px; color: #000; vertical-align: middle;">{{ $index + 1 }}.</span>
                                 </div>
                             @endif
                         @else
                             @if(($index + 1) % 2 != 0)
                                 <div style="text-align: left; padding-left: 5px; font-size: 9.5pt;">{{ $index + 1 }}.</div>
                             @else
-                                <div style="text-align: right; padding-right: 15px; font-size: 9.5pt;">{{ $index + 1 }}.</div>
+                                <div style="text-align: left; padding-left: 60px; font-size: 9.5pt;">{{ $index + 1 }}.</div>
                             @endif
                         @endif
                     </td>

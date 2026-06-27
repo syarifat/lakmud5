@@ -74,31 +74,6 @@ class PesertaController extends Controller
         return view('peserta.absensi', compact('jadwals'));
     }
 
-    public function tapAbsen(Request $request)
-    {
-        $request->validate([
-            'jadwal_id' => 'required|exists:jadwals,id',
-        ]);
-
-        $user = Auth::user();
-
-        // Cegah tap ganda
-        $exists = Absensi::where('jadwal_id', $request->jadwal_id)
-            ->where('peserta_id', $user->id)
-            ->exists();
-
-        if ($exists) {
-            return redirect()->back()->with('error', 'Anda sudah melakukan absensi pada sesi ini.');
-        }
-
-        Absensi::create([
-            'jadwal_id' => $request->jadwal_id,
-            'peserta_id' => $user->id,
-            'waktu_tap' => now(),
-        ]);
-
-        return redirect()->back()->with('status', 'Absensi berhasil dilakukan secara mandiri/simulasi.');
-    }
 
     public function nilaiPemateriIndex()
     {
@@ -241,27 +216,26 @@ class PesertaController extends Controller
 
         // Susun daftar materi dan ketersediaan tes
         foreach ($materis as $m) {
-            $m->has_pretest = $m->bankSoals->where('tipe', 'pretest')->count() > 0;
-            $m->has_posttest = $m->bankSoals->where('tipe', 'posttest')->count() > 0;
+            $m->has_pretest = true;
+            $m->has_posttest = true;
 
-            // Cek apakah user sudah mengerjakan
-            if ($m->has_pretest) {
-                $pretestSoalIds = $m->bankSoals->where('tipe', 'pretest')->pluck('id');
-                $m->pretest_done = JawabanTes::where('peserta_id', $user->id)
-                    ->whereIn('bank_soal_id', $pretestSoalIds)
-                    ->exists();
-            } else {
-                $m->pretest_done = false;
-            }
+            // Cek apakah user sudah mengunggah Pre-Test
+            $pretestJawaban = JawabanTes::where('peserta_id', $user->id)
+                ->whereHas('bankSoal', function ($q) use ($m) {
+                    $q->where('materi_id', $m->id)->where('tipe', 'pretest');
+                })
+                ->first();
+            $m->pretest_done = !is_null($pretestJawaban);
+            $m->pretest_file = $pretestJawaban ? $pretestJawaban->jawaban : null;
 
-            if ($m->has_posttest) {
-                $posttestSoalIds = $m->bankSoals->where('tipe', 'posttest')->pluck('id');
-                $m->posttest_done = JawabanTes::where('peserta_id', $user->id)
-                    ->whereIn('bank_soal_id', $posttestSoalIds)
-                    ->exists();
-            } else {
-                $m->posttest_done = false;
-            }
+            // Cek apakah user sudah mengunggah Post-Test
+            $posttestJawaban = JawabanTes::where('peserta_id', $user->id)
+                ->whereHas('bankSoal', function ($q) use ($m) {
+                    $q->where('materi_id', $m->id)->where('tipe', 'posttest');
+                })
+                ->first();
+            $m->posttest_done = !is_null($posttestJawaban);
+            $m->posttest_file = $posttestJawaban ? $posttestJawaban->jawaban : null;
         }
 
         return view('peserta.ujian.index', compact('materis'));
@@ -277,25 +251,27 @@ class PesertaController extends Controller
         $user = Auth::user();
         $materi = Materi::findOrFail($materi_id);
 
-        // Ambil pertanyaan
-        $soals = BankSoal::where('materi_id', $materi_id)
+        // Ambil atau buat BankSoal record untuk tipe ini agar foreign key valid
+        $firstSoal = BankSoal::where('materi_id', $materi_id)
             ->where('tipe', $tipe)
-            ->get();
+            ->first();
 
-        if ($soals->isEmpty()) {
-            return redirect()->route('peserta.ujian')->with('error', 'Belum ada soal untuk tes ini.');
+        if (!$firstSoal) {
+            $firstSoal = BankSoal::create([
+                'materi_id' => $materi_id,
+                'tipe' => $tipe,
+                'pertanyaan' => 'Berkas Jawaban ' . ucfirst($tipe) . ' ' . $materi->nama_materi,
+            ]);
         }
 
-        // Cek apakah sudah pernah mengerjakan
-        $alreadyAnswered = JawabanTes::where('peserta_id', $user->id)
-            ->whereIn('bank_soal_id', $soals->pluck('id'))
-            ->exists();
+        // Ambil jawaban yang sudah pernah diunggah jika ada
+        $existingJawaban = JawabanTes::where('peserta_id', $user->id)
+            ->where('bank_soal_id', $firstSoal->id)
+            ->first();
 
-        if ($alreadyAnswered) {
-            return redirect()->route('peserta.ujian')->with('error', 'Anda sudah mengerjakan tes ini sebelumnya.');
-        }
+        $soals = collect([$firstSoal]);
 
-        return view('peserta.ujian.mulai', compact('materi', 'soals', 'tipe'));
+        return view('peserta.ujian.mulai', compact('materi', 'soals', 'tipe', 'existingJawaban'));
     }
 
     public function ujianStore($materi_id, Request $request)
@@ -306,38 +282,63 @@ class PesertaController extends Controller
         }
 
         $request->validate([
-            'jawaban' => 'required|array',
-            'jawaban.*' => 'required|string',
+            'foto_jawaban' => 'required|file|mimes:jpeg,png,jpg,pdf|max:10240',
         ]);
 
         $user = Auth::user();
-        $soals = BankSoal::where('materi_id', $materi_id)
+        $materi = Materi::findOrFail($materi_id);
+
+        // Ambil atau buat BankSoal record untuk tipe ini agar foreign key valid
+        $firstSoal = BankSoal::where('materi_id', $materi_id)
             ->where('tipe', $tipe)
-            ->get();
+            ->first();
 
-        // Cek ulang apakah sudah pernah mengerjakan
-        $alreadyAnswered = JawabanTes::where('peserta_id', $user->id)
-            ->whereIn('bank_soal_id', $soals->pluck('id'))
-            ->exists();
-
-        if ($alreadyAnswered) {
-            return redirect()->route('peserta.ujian')->with('error', 'Anda sudah mengerjakan tes ini sebelumnya.');
+        if (!$firstSoal) {
+            $firstSoal = BankSoal::create([
+                'materi_id' => $materi_id,
+                'tipe' => $tipe,
+                'pertanyaan' => 'Berkas Jawaban ' . ucfirst($tipe) . ' ' . $materi->nama_materi,
+            ]);
         }
 
-        // Simpan jawaban
-        foreach ($request->jawaban as $soal_id => $jawabanText) {
-            // Pastikan bank_soal_id tersebut memang milik materi ini dan tipe ini
-            $validSoal = $soals->where('id', $soal_id)->first();
-            if ($validSoal) {
+        // Simpan file
+        if ($request->hasFile('foto_jawaban')) {
+            $file = $request->file('foto_jawaban');
+            $destinationPath = public_path('uploads/jawaban_ujian');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            // Clean material and participant name for disk filename
+            $cleanMateri = str_replace([' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|'], '_', $materi->nama_materi);
+            $cleanName = str_replace([' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|'], '_', $user->name);
+            
+            // Format: materi_nama peserta_timestamp.ext
+            $filename = $cleanMateri . '_' . $cleanName . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);
+            $filePath = 'uploads/jawaban_ujian/' . $filename;
+            
+            // Hapus file lama jika ada untuk mencegah sampah berkas
+            $oldJawaban = JawabanTes::where('peserta_id', $user->id)
+                ->where('bank_soal_id', $firstSoal->id)
+                ->first();
+                
+            if ($oldJawaban) {
+                if (file_exists(public_path($oldJawaban->jawaban))) {
+                    @unlink(public_path($oldJawaban->jawaban));
+                }
+                $oldJawaban->update([
+                    'jawaban' => $filePath,
+                ]);
+            } else {
                 JawabanTes::create([
-                    'bank_soal_id' => $soal_id,
+                    'bank_soal_id' => $firstSoal->id,
                     'peserta_id' => $user->id,
-                    'jawaban' => $jawabanText,
-                    'nilai' => null, // akan dinilai oleh inspel nanti
+                    'jawaban' => $filePath,
+                    'nilai' => null,
                 ]);
             }
         }
 
-        return redirect()->route('peserta.ujian')->with('status', 'Jawaban ujian Anda berhasil dikirim.');
+        return redirect()->route('peserta.ujian')->with('status', 'Foto lembar jawaban berhasil diunggah.');
     }
 }
