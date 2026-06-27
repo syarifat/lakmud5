@@ -139,10 +139,54 @@
             transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s;
         }
 
-        input[type="password"]:focus {
+        input[type="password"]:focus, input[type="text"]:focus {
             background: rgba(255, 255, 255, 0.08);
             border-color: #10b981;
             box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            font-size: 14px;
+            color: #ffffff;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .eye-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            outline: none;
+            transition: color 0.2s;
+        }
+
+        .eye-toggle:hover {
+            color: #10b981;
+        }
+
+        .eye-toggle svg {
+            width: 20px;
+            height: 20px;
         }
 
         .btn-submit {
@@ -234,13 +278,39 @@
             <!-- Password Baru -->
             <div class="form-group">
                 <label for="password">Sandi Baru</label>
-                <input type="password" id="password" name="password" required minlength="8" placeholder="Minimal 8 karakter...">
+                <div class="input-container">
+                    <input type="password" id="password" name="password" required minlength="8" placeholder="Minimal 8 karakter..." style="padding-right: 48px;">
+                    <button type="button" class="eye-toggle" data-target="password">
+                        <!-- Eye Open Icon (Show) -->
+                        <svg class="eye-show" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <!-- Eye Closed Icon (Hide) -->
+                        <svg class="eye-hide" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <!-- Konfirmasi Password Baru -->
             <div class="form-group">
                 <label for="password_confirmation">Konfirmasi Sandi Baru</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required minlength="8" placeholder="Ulangi sandi baru...">
+                <div class="input-container">
+                    <input type="password" id="password_confirmation" name="password_confirmation" required minlength="8" placeholder="Ulangi sandi baru..." style="padding-right: 48px;">
+                    <button type="button" class="eye-toggle" data-target="password_confirmation">
+                        <!-- Eye Open Icon (Show) -->
+                        <svg class="eye-show" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <!-- Eye Closed Icon (Hide) -->
+                        <svg class="eye-hide" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <button type="submit" class="btn-submit">
@@ -252,5 +322,26 @@
             <footer>PAC IPNU IPPNU Kauman &bull; LAKMUD V</footer>
         </center>
     </div>
+
+    <script>
+        document.querySelectorAll('.eye-toggle').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const showIcon = this.querySelector('.eye-show');
+                const hideIcon = this.querySelector('.eye-hide');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    showIcon.style.display = 'block';
+                    hideIcon.style.display = 'none';
+                } else {
+                    input.type = 'password';
+                    showIcon.style.display = 'none';
+                    hideIcon.style.display = 'block';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
