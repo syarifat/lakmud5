@@ -82,4 +82,29 @@ class PendaftaranController extends Controller
         // Arahkan ke halaman login dengan pesan sukses (ingat, middleware login kita sebelumnya sudah memblokir role pendaftar yang belum lulus)
         return redirect()->route('login')->with('status', 'Pendaftaran berhasil! Akun Anda telah dibuat. Silakan tunggu admin memvalidasi berkas Anda sebelum bisa Login.');
     }
+
+    public function showResetPasswordForm(Request $request, User $user)
+    {
+        if (! $request->hasValidSignature()) {
+            abort(403, 'Link reset sandi tidak valid atau telah kedaluwarsa.');
+        }
+        return view('pendaftaran.reset_sandi', compact('user'));
+    }
+
+    public function updatePasswordCustom(Request $request, User $user)
+    {
+        if (! $request->hasValidSignature()) {
+            abort(403, 'Link reset sandi tidak valid atau telah kedaluwarsa.');
+        }
+
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('login')->with('status', 'Sandi Anda berhasil diperbarui. Silakan masuk menggunakan sandi baru.');
+    }
 }

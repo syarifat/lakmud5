@@ -24,6 +24,9 @@ Route::get('/dashboard', function () {
 Route::match(['get','post'], '/daftar-lakmud', function () {
     return view('pendaftaran.ditutup');
 })->name('pendaftar.biodata');
+
+Route::get('/reset-sandi/{user}', [PendaftaranController::class, 'showResetPasswordForm'])->name('password.reset.custom');
+Route::post('/reset-sandi/{user}', [PendaftaranController::class, 'updatePasswordCustom'])->name('password.update.custom');
 // ==========================================
 // PENGELOMPOKAN ROUTE BERDASARKAN ROLE
 // ==========================================
@@ -90,6 +93,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Manajemen Materi
     Route::resource('materi', MateriController::class);
     Route::resource('user', UserController::class);
+    Route::post('/user/{user}/reset-password', [UserController::class, 'resetPassword'])->name('user.reset-password');
     Route::resource('pemateri', PemateriController::class);
     Route::resource('kelompok', KelompokController::class);
 

@@ -83,4 +83,39 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('admin.user.index')->with('status', 'User berhasil dihapus.');
     }
+
+    public function resetPassword(Request $request, User $user)
+    {
+        // Buat signed URL kustom tanpa kedaluwarsa untuk user merubah password sendiri
+        $resetUrl = \Illuminate\Support\Facades\URL::signedRoute('password.reset.custom', ['user' => $user->id]);
+
+        // Cari nomor HP di data pendaftaran
+        $no_hp = $user->pendaftaran?->no_hp;
+        $waLink = null;
+
+        if ($no_hp) {
+            // Bersihkan format nomor HP (hapus karakter non-angka)
+            $cleanPhone = preg_replace('/[^0-9]/', '', $no_hp);
+            // Ubah format 08xxx menjadi 628xxx
+            if (strpos($cleanPhone, '0') === 0) {
+                $cleanPhone = '62' . substr($cleanPhone, 1);
+            }
+
+            // Teks pesan WhatsApp
+            $message = "Halo " . $user->name . ",\n\nUntuk merubah sandi akun LAKMUD V Anda, silakan klik tautan berikut:\n" . $resetUrl . "\n\nTautan ini bersifat aman dan tidak memiliki masa kedaluwarsa.\n\nTerima kasih.";
+            
+            $waLink = "https://api.whatsapp.com/send?phone=" . $cleanPhone . "&text=" . urlencode($message);
+        }
+
+        $redirect = redirect()->route('admin.user.index')
+            ->with('status', 'Link reset sandi untuk ' . $user->name . ' (' . $user->email . ') telah dibuat.');
+
+        if ($waLink) {
+            $redirect->with('wa_link', $waLink);
+        } else {
+            $redirect->with('error', 'User tidak memiliki nomor HP terdaftar, link reset: ' . $resetUrl);
+        }
+
+        return $redirect;
+    }
 }
