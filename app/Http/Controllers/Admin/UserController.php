@@ -86,8 +86,9 @@ class UserController extends Controller
 
     public function resetPassword(Request $request, User $user)
     {
-        // Buat signed URL kustom tanpa kedaluwarsa untuk user merubah password sendiri
-        $resetUrl = \Illuminate\Support\Facades\URL::signedRoute('password.reset.custom', ['user' => $user->id]);
+        // Buat token kustom yang aman berbasis Hash HMAC (bebas dari masalah proxy/HTTPS mismatch)
+        $token = hash_hmac('sha256', $user->id . '|' . $user->email, config('app.key'));
+        $resetUrl = route('password.reset.custom', ['user' => $user->id]) . '?token=' . $token;
 
         // Cari nomor HP di data pendaftaran
         $no_hp = $user->pendaftaran?->no_hp;

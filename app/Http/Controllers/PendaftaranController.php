@@ -85,7 +85,10 @@ class PendaftaranController extends Controller
 
     public function showResetPasswordForm(Request $request, User $user)
     {
-        if (! $request->hasValidSignature()) {
+        $token = $request->query('token');
+        $expectedToken = hash_hmac('sha256', $user->id . '|' . $user->email, config('app.key'));
+
+        if (! $token || ! hash_equals($expectedToken, $token)) {
             abort(403, 'Link reset sandi tidak valid atau telah kedaluwarsa.');
         }
         return view('pendaftaran.reset_sandi', compact('user'));
@@ -93,7 +96,10 @@ class PendaftaranController extends Controller
 
     public function updatePasswordCustom(Request $request, User $user)
     {
-        if (! $request->hasValidSignature()) {
+        $token = $request->query('token');
+        $expectedToken = hash_hmac('sha256', $user->id . '|' . $user->email, config('app.key'));
+
+        if (! $token || ! hash_equals($expectedToken, $token)) {
             abort(403, 'Link reset sandi tidak valid atau telah kedaluwarsa.');
         }
 
