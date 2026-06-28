@@ -72,17 +72,33 @@
         <div class="pt-2 pb-3 space-y-1">
             @if($role == 'admin')
                 <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">Dashboard</x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ route('admin.pendaftar.index') }}">Verifikasi Pendaftar</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.pendaftar.index')" :active="request()->routeIs('admin.pendaftar.*')">Verifikasi Pendaftar</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.user.index')" :active="request()->routeIs('admin.user.*')">Manajemen User</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.pemateri.index')" :active="request()->routeIs('admin.pemateri.*')">Master Pemateri</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.materi.index')" :active="request()->routeIs('admin.materi.*')">Master Materi</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.kelompok.index')" :active="request()->routeIs('admin.kelompok.*')">Manajemen Kelompok</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.laporan.index')" :active="request()->routeIs('admin.laporan.*')">Rekap Laporan</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.slide-cv')" :active="request()->routeIs('admin.slide-cv')">Slide CV Pemateri</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.idcard.index')" :active="request()->routeIs('admin.idcard.*')">Cetak ID Card</x-responsive-nav-link>
             @elseif($role == 'peserta')
-                <x-responsive-nav-link href="#">Dashboard</x-responsive-nav-link>
-                <x-responsive-nav-link href="#">Absensi RFID</x-responsive-nav-link>
-                <x-responsive-nav-link href="#">Refleksi Harian</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('peserta.dashboard')" :active="request()->routeIs('peserta.dashboard')">Dashboard</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('peserta.absensi')" :active="request()->routeIs('peserta.absensi')">Tap Absensi</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('peserta.nilai-pemateri')" :active="request()->routeIs('peserta.nilai-pemateri')">Nilai Pemateri</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('peserta.nilai-inspel')" :active="request()->routeIs('peserta.nilai-inspel')">Nilai Inspel</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('peserta.refleksi')" :active="request()->routeIs('peserta.refleksi')">Refleksi Harian</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('peserta.ujian')" :active="request()->routeIs('peserta.ujian*')">Upload Jawaban Pre/Post Test</x-responsive-nav-link>
             @elseif($role == 'inspel')
-                <x-responsive-nav-link href="#">Dashboard</x-responsive-nav-link>
-                <x-responsive-nav-link href="#">Input Nilai</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('inspel.dashboard')" :active="request()->routeIs('inspel.dashboard')">Dashboard</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('inspel.penilaian')" :active="request()->routeIs('inspel.penilaian*')">Input Penilaian Peserta</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('inspel.pemateri')" :active="request()->routeIs('inspel.pemateri*')">Data Pemateri</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('inspel.absensi')" :active="request()->routeIs('inspel.absensi')">Monitor Absensi</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('inspel.refleksi')" :active="request()->routeIs('inspel.refleksi*')">Review Refleksi</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('inspel.laporan.index')" :active="request()->routeIs('inspel.laporan.*')">Rekap Laporan</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('inspel.slide-cv')" :active="request()->routeIs('inspel.slide-cv')">Slide CV Pemateri</x-responsive-nav-link>
             @elseif($role == 'pendamping')
-                <x-responsive-nav-link href="#">Dashboard</x-responsive-nav-link>
-                <x-responsive-nav-link href="#">Observasi Harian</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('pendamping.dashboard')" :active="request()->routeIs('pendamping.dashboard')">Dashboard & Anggota</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('pendamping.absensi')" :active="request()->routeIs('pendamping.absensi')">Monitor Absensi</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('pendamping.observasi')" :active="request()->routeIs('pendamping.observasi*')">Observasi Harian</x-responsive-nav-link>
             @endif
         </div>
 

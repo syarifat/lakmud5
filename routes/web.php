@@ -16,6 +16,18 @@ Route::get('/', function () {
 
 // Route bawaan Breeze kita biarkan sementara
 Route::get('/dashboard', function () {
+    $role = auth()->user()->role;
+    if ($role == 'admin') {
+        return redirect()->route('admin.dashboard');
+    } elseif ($role == 'peserta') {
+        return redirect()->route('peserta.dashboard');
+    } elseif ($role == 'inspel') {
+        return redirect()->route('inspel.dashboard');
+    } elseif ($role == 'pendamping') {
+        return redirect()->route('pendamping.dashboard');
+    } elseif ($role == 'pendaftar') {
+        return redirect()->route('pendaftar.biodata');
+    }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 // ROUTE PUBLIK UNTUK PENDAFTARAN — ditutup
