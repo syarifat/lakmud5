@@ -86,9 +86,26 @@
             color: #555;
             padding-left: 5px;
         }
+        @page {
+            margin: 40px 40px 60px 40px;
+        }
+        .footer-motto {
+            position: fixed;
+            bottom: -35px;
+            left: 0px;
+            right: 0px;
+            height: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            color: #22c55e;
+            font-weight: bold;
+            font-style: italic;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
+    <div class="footer-motto">Belajar, Berjuang, Bertaqwa</div>
     @php
         $pages = isset($is_all) && $is_all ? $reportData : collect([['jadwal' => $jadwal, 'pesertas' => $pesertas]]);
     @endphp
