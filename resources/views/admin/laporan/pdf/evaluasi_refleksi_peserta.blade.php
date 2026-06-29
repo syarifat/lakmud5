@@ -62,11 +62,11 @@
             margin-top: 40px;
         }
         @page {
-            margin: 40px 40px 60px 40px;
+            margin: 40px;
         }
         .footer-motto {
             position: fixed;
-            bottom: -35px;
+            bottom: -15px;
             left: 0px;
             right: 0px;
             height: 20px;
@@ -74,7 +74,6 @@
             font-size: 12pt;
             color: #22c55e;
             font-weight: bold;
-            font-style: italic;
             text-align: left;
         }
     </style>
