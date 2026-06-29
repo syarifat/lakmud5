@@ -35,7 +35,7 @@
                         <!-- Dropdown Jenis Laporan -->
                         <div class="md:col-span-1">
                             <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Pilih Jenis Laporan</label>
-                            <select name="type" onchange="this.form.target=''; this.form.submit();"
+                            <select name="type" onchange="this.form.action='{{ route($routePrefix . '.laporan.index') }}'; this.form.target=''; this.form.submit();"
                                 class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 font-semibold text-slate-800 transition">
                                 <option value="">-- Pilih Jenis Rekap Laporan --</option>
                                 <option value="cv_pemateri" {{ $type === 'cv_pemateri' ? 'selected' : '' }}>Laporan #1 - CV Pemateri</option>
@@ -55,7 +55,7 @@
                                 @if($type === 'cv_pemateri')
                                     <div class="sm:col-span-2">
                                         <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Narasumber / Pemateri</label>
-                                        <select name="pemateri_id" required class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
+                                        <select name="pemateri_id" class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
                                             <option value="">-- Pilih Narasumber --</option>
                                             @foreach($pemateris as $p)
                                                 <option value="{{ $p->id }}" {{ request('pemateri_id') == $p->id ? 'selected' : '' }}>{{ $p->nama }}</option>
@@ -65,7 +65,7 @@
                                 @elseif($type === 'daftar_hadir' || $type === 'penilaian_peserta')
                                     <div class="sm:col-span-2">
                                         <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Jadwal Sesi</label>
-                                        <select name="jadwal_id" required class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
+                                        <select name="jadwal_id" class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
                                             <option value="">-- Pilih Sesi Materi --</option>
                                             @foreach($jadwals as $j)
                                                 <option value="{{ $j->id }}" {{ request('jadwal_id') == $j->id ? 'selected' : '' }}>
@@ -77,7 +77,7 @@
                                 @elseif($type === 'observasi_harian')
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Kelompok</label>
-                                        <select name="kelompok_id" required class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
+                                        <select name="kelompok_id" class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
                                             <option value="">-- Pilih Kelompok --</option>
                                             @foreach($kelompoks as $k)
                                                 <option value="{{ $k->id }}" {{ request('kelompok_id') == $k->id ? 'selected' : '' }}>{{ $k->nama_kelompok }}</option>
@@ -86,7 +86,7 @@
                                     </div>
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-600 mb-2">Hari Ke-</label>
-                                        <select name="hari_ke" required class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
+                                        <select name="hari_ke" class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
                                             <option value="1" {{ request('hari_ke') == 1 ? 'selected' : '' }}>Hari Ke-1</option>
                                             <option value="2" {{ request('hari_ke') == 2 ? 'selected' : '' }}>Hari Ke-2</option>
                                             <option value="3" {{ request('hari_ke') == 3 ? 'selected' : '' }}>Hari Ke-3</option>
@@ -96,7 +96,7 @@
                                 @elseif($type === 'nilai_pemateri' || $type === 'nilai_inspel')
                                     <div class="sm:col-span-2">
                                         <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Peserta</label>
-                                        <select name="peserta_id" required class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
+                                        <select name="peserta_id" class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
                                             <option value="">-- Pilih Peserta --</option>
                                             @foreach($pesertas as $pe)
                                                 <option value="{{ $pe->id }}" {{ request('peserta_id') == $pe->id ? 'selected' : '' }}>{{ $pe->name }}</option>
@@ -106,7 +106,7 @@
                                 @elseif($type === 'evaluasi_refleksi')
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Peserta</label>
-                                        <select name="peserta_id" required class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
+                                        <select name="peserta_id" class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
                                             <option value="">-- Pilih Peserta --</option>
                                             @foreach($pesertas as $pe)
                                                 <option value="{{ $pe->id }}" {{ request('peserta_id') == $pe->id ? 'selected' : '' }}>{{ $pe->name }}</option>
@@ -115,7 +115,7 @@
                                     </div>
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-600 mb-2">Hari Ke-</label>
-                                        <select name="hari_ke" required class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
+                                        <select name="hari_ke" class="w-full text-sm rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 text-slate-700 transition">
                                             <option value="1" {{ request('hari_ke') == 1 ? 'selected' : '' }}>Hari Ke-1</option>
                                             <option value="2" {{ request('hari_ke') == 2 ? 'selected' : '' }}>Hari Ke-2</option>
                                             <option value="3" {{ request('hari_ke') == 3 ? 'selected' : '' }}>Hari Ke-3</option>
