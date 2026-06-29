@@ -101,7 +101,7 @@
         .footer-motto {
             position: fixed;
             bottom: 0;
-            left: 40px;
+            left: 10px;
             right: 40px;
             height: 20px;
             font-family: 'Times New Roman', Times, serif;

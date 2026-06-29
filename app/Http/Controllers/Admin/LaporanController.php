@@ -167,20 +167,21 @@ class LaporanController extends Controller
 
         $type = $request->type;
         $is_all = $request->download_all == 1;
+        $paper_size = in_array($request->paper_size, ['a4', 'f4']) ? $request->paper_size : 'a4';
 
         switch ($type) {
             case 'cv_pemateri':
                 if ($is_all) {
                     $pemateris = Pemateri::with(['riwayatPendidikans', 'riwayatOrganisasis', 'riwayatPengkaderans'])->orderBy('nama')->get();
                     $pdf = Pdf::loadView('admin.laporan.pdf.cv_pemateri', compact('pemateris', 'is_all'));
-                    return $this->downloadPdf($pdf, '01_Semua_CV_Pemateri.pdf');
+                    return $this->downloadPdf($pdf, '01_Semua_CV_Pemateri.pdf', $paper_size);
                 }
 
                 $request->validate(['pemateri_id' => 'required|exists:pemateris,id']);
                 $pemateri = Pemateri::with(['riwayatPendidikans', 'riwayatOrganisasis', 'riwayatPengkaderans'])->findOrFail($request->pemateri_id);
                 
                 $pdf = Pdf::loadView('admin.laporan.pdf.cv_pemateri', compact('pemateri'));
-                return $this->downloadPdf($pdf, '01_CV_Pemateri_' . $pemateri->nama . '.pdf');
+                return $this->downloadPdf($pdf, '01_CV_Pemateri_' . $pemateri->nama . '.pdf', $paper_size);
 
             case 'daftar_hadir':
                 if ($is_all) {
@@ -198,7 +199,7 @@ class LaporanController extends Controller
                         ];
                     });
                     $pdf = Pdf::loadView('admin.laporan.pdf.daftar_hadir', compact('reportData', 'is_all'));
-                    return $this->downloadPdf($pdf, '02_Semua_Daftar_Hadir.pdf');
+                    return $this->downloadPdf($pdf, '02_Semua_Daftar_Hadir.pdf', $paper_size);
                 }
 
                 $request->validate(['jadwal_id' => 'required|exists:jadwals,id']);
@@ -213,7 +214,7 @@ class LaporanController extends Controller
                     ->get();
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.daftar_hadir', compact('jadwal', 'pesertas'));
-                return $this->downloadPdf($pdf, '02_Daftar_Hadir_' . $jadwal->materi->nama_materi . '.pdf');
+                return $this->downloadPdf($pdf, '02_Daftar_Hadir_' . $jadwal->materi->nama_materi . '.pdf', $paper_size);
 
             case 'penilaian_peserta':
                 if ($is_all) {
@@ -231,7 +232,7 @@ class LaporanController extends Controller
                         ];
                     });
                     $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_peserta', compact('reportData', 'is_all'));
-                    return $this->downloadPdf($pdf, '03_Semua_Penilaian_Peserta.pdf');
+                    return $this->downloadPdf($pdf, '03_Semua_Penilaian_Peserta.pdf', $paper_size);
                 }
 
                 $request->validate(['jadwal_id' => 'required|exists:jadwals,id']);
@@ -245,7 +246,7 @@ class LaporanController extends Controller
                     ->get();
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_peserta', compact('jadwal', 'pesertas'));
-                return $this->downloadPdf($pdf, '03_Penilaian_Peserta_' . $jadwal->materi->nama_materi . '.pdf');
+                return $this->downloadPdf($pdf, '03_Penilaian_Peserta_' . $jadwal->materi->nama_materi . '.pdf', $paper_size);
 
             case 'observasi_harian':
                 if ($is_all) {
@@ -267,7 +268,7 @@ class LaporanController extends Controller
                         }
                     }
                     $pdf = Pdf::loadView('admin.laporan.pdf.observasi_harian', compact('reportData', 'is_all'));
-                    return $this->downloadPdf($pdf, '04_Semua_Observasi_Harian.pdf');
+                    return $this->downloadPdf($pdf, '04_Semua_Observasi_Harian.pdf', $paper_size);
                 }
 
                 $request->validate([
@@ -284,7 +285,7 @@ class LaporanController extends Controller
                     ->keyBy('peserta_id');
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.observasi_harian', compact('kelompok', 'pesertas', 'hari_ke', 'observasis'));
-                return $this->downloadPdf($pdf, '04_Observasi_Harian_Kelompok_' . $kelompok->nama_kelompok . '_Hari_' . $hari_ke . '.pdf');
+                return $this->downloadPdf($pdf, '04_Observasi_Harian_Kelompok_' . $kelompok->nama_kelompok . '_Hari_' . $hari_ke . '.pdf', $paper_size);
 
             case 'nilai_pemateri':
                 if ($is_all) {
@@ -299,7 +300,7 @@ class LaporanController extends Controller
                         ];
                     });
                     $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_pemateri_oleh_peserta', compact('reportData', 'is_all'));
-                    return $this->downloadPdf($pdf, '05_Semua_Penilaian_Pemateri.pdf');
+                    return $this->downloadPdf($pdf, '05_Semua_Penilaian_Pemateri.pdf', $paper_size);
                 }
 
                 $request->validate(['peserta_id' => 'required|exists:users,id']);
@@ -314,7 +315,7 @@ class LaporanController extends Controller
                     ->keyBy('jadwal_id');
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_pemateri_oleh_peserta', compact('peserta', 'jadwals', 'ratings'));
-                return $this->downloadPdf($pdf, '05_Penilaian_Pemateri_Oleh_' . $peserta->name . '.pdf');
+                return $this->downloadPdf($pdf, '05_Penilaian_Pemateri_Oleh_' . $peserta->name . '.pdf', $paper_size);
 
             case 'nilai_inspel':
                 if ($is_all) {
@@ -329,7 +330,7 @@ class LaporanController extends Controller
                         ];
                     });
                     $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_inspel_oleh_peserta', compact('reportData', 'is_all'));
-                    return $this->downloadPdf($pdf, '06_Semua_Penilaian_Inspel.pdf');
+                    return $this->downloadPdf($pdf, '06_Semua_Penilaian_Inspel.pdf', $paper_size);
                 }
 
                 $request->validate(['peserta_id' => 'required|exists:users,id']);
@@ -344,7 +345,7 @@ class LaporanController extends Controller
                     ->keyBy('inspel_id');
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_inspel_oleh_peserta', compact('peserta', 'inspels', 'ratings'));
-                return $this->downloadPdf($pdf, '06_Penilaian_Inspel_Oleh_' . $peserta->name . '.pdf');
+                return $this->downloadPdf($pdf, '06_Penilaian_Inspel_Oleh_' . $peserta->name . '.pdf', $paper_size);
 
             case 'evaluasi_refleksi':
                 if ($is_all) {
@@ -363,7 +364,7 @@ class LaporanController extends Controller
                         }
                     }
                     $pdf = Pdf::loadView('admin.laporan.pdf.evaluasi_refleksi_peserta', compact('reportData', 'is_all'));
-                    return $this->downloadPdf($pdf, '07_Semua_Evaluasi_Refleksi.pdf');
+                    return $this->downloadPdf($pdf, '07_Semua_Evaluasi_Refleksi.pdf', $paper_size);
                 }
 
                 $request->validate([
@@ -378,7 +379,7 @@ class LaporanController extends Controller
                     ->first();
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.evaluasi_refleksi_peserta', compact('peserta', 'hari_ke', 'evaluasi'));
-                return $this->downloadPdf($pdf, '07_Evaluasi_Refleksi_Peserta_' . $peserta->name . '_Hari_' . $hari_ke . '.pdf');
+                return $this->downloadPdf($pdf, '07_Evaluasi_Refleksi_Peserta_' . $peserta->name . '_Hari_' . $hari_ke . '.pdf', $paper_size);
 
             case 'soal_prepost':
                 $materi_id = $request->materi_id;
@@ -395,15 +396,21 @@ class LaporanController extends Controller
                 $questions = BankSoal::whereIn('materi_id', $materis->pluck('id'))->get()->groupBy('materi_id');
 
                 $pdf = Pdf::loadView('admin.laporan.pdf.soal_prepost', compact('materis', 'questions'));
-                return $this->downloadPdf($pdf, '08_Soal_Pretest_Posttest.pdf');
+                return $this->downloadPdf($pdf, '08_Soal_Pretest_Posttest.pdf', $paper_size);
 
             default:
                 return abort(404, 'Jenis laporan tidak valid.');
         }
     }
 
-    private function downloadPdf($pdf, $filename)
+    private function downloadPdf($pdf, $filename, $paper_size = 'a4')
     {
+        if ($paper_size === 'f4') {
+            // F4/Folio: 215mm x 330mm in points (1mm = 2.8346pt)
+            $pdf->setPaper([0, 0, 609.4, 935.4], 'portrait');
+        } else {
+            $pdf->setPaper('a4', 'portrait');
+        }
         $cleanFilename = preg_replace('/[^A-Za-z0-9_\-\.]/', '', str_replace(' ', '_', $filename));
         return response($pdf->output(), 200, [
             'Content-Type' => 'application/pdf',

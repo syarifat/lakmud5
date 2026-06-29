@@ -31,6 +31,7 @@
             <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8">
                 <form id="laporanFilterForm" method="GET" action="{{ route($routePrefix . '.laporan.index') }}" class="space-y-6">
                     <input type="hidden" name="download_all" id="downloadAllInput" value="0">
+                    <input type="hidden" name="paper_size" id="paperSizeInput" value="a4">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Dropdown Jenis Laporan -->
                         <div class="md:col-span-1">
@@ -154,13 +155,13 @@
                             </button>
                             
                             @if($type !== 'berkas_jawaban')
-                                <button type="submit" onclick="document.getElementById('downloadAllInput').value='0'; this.form.action='{{ route($routePrefix . '.laporan.download') }}'; this.form.target='_blank';"
+                                <button type="button" onclick="showPaperModal(0)"
                                     class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm px-6 py-3 rounded-xl transition shadow-md">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                     Unduh PDF (Filter)
                                 </button>
                                 
-                                <button type="submit" onclick="document.getElementById('downloadAllInput').value='1'; this.form.action='{{ route($routePrefix . '.laporan.download') }}'; this.form.target='_blank';"
+                                <button type="button" onclick="showPaperModal(1)"
                                     class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-6 py-3 rounded-xl transition shadow-md hover:shadow-lg">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                     Unduh Semua PDF
@@ -646,4 +647,84 @@
 
         </div>
     </div>
+
+<!-- Modal Pilih Ukuran Kertas -->
+<div id="paperSizeModal" class="fixed inset-0 z-50 flex items-center justify-center" style="display:none; background: rgba(15,23,42,0.55); backdrop-filter: blur(4px);">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm mx-4 transform transition-all" style="animation: modalIn 0.2s ease;">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="p-2 bg-indigo-50 rounded-xl">
+                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">Pilih Ukuran Kertas</h3>
+        </div>
+        <p class="text-sm text-slate-500 mb-6 pl-10">Pilih ukuran kertas untuk file PDF yang akan diunduh.</p>
+
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <!-- A4 -->
+            <button onclick="submitWithPaper('a4')"
+                class="group flex flex-col items-center justify-center p-5 border-2 border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 rounded-xl transition-all cursor-pointer">
+                <div class="w-10 h-14 border-2 border-slate-300 group-hover:border-indigo-400 rounded-sm mb-3 flex items-end justify-center pb-1 relative transition-all">
+                    <div class="absolute top-0 right-0 w-3 h-3 border-l-2 border-b-2 border-slate-300 group-hover:border-indigo-400 transition-all bg-white" style="border-top-right-radius:3px;"></div>
+                    <span class="text-xs font-bold text-slate-400 group-hover:text-indigo-500 transition-all" style="font-size:8px;">A4</span>
+                </div>
+                <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-all">A4</span>
+                <span class="text-xs text-slate-400 mt-0.5">210 × 297 mm</span>
+            </button>
+
+            <!-- F4 / Folio -->
+            <button onclick="submitWithPaper('f4')"
+                class="group flex flex-col items-center justify-center p-5 border-2 border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 rounded-xl transition-all cursor-pointer">
+                <div class="w-10 h-16 border-2 border-slate-300 group-hover:border-emerald-400 rounded-sm mb-3 flex items-end justify-center pb-1 relative transition-all">
+                    <div class="absolute top-0 right-0 w-3 h-3 border-l-2 border-b-2 border-slate-300 group-hover:border-emerald-400 transition-all bg-white" style="border-top-right-radius:3px;"></div>
+                    <span class="text-xs font-bold text-slate-400 group-hover:text-emerald-500 transition-all" style="font-size:8px;">F4</span>
+                </div>
+                <span class="font-bold text-slate-700 group-hover:text-emerald-600 transition-all">F4 / Folio</span>
+                <span class="text-xs text-slate-400 mt-0.5">215 × 330 mm</span>
+            </button>
+        </div>
+
+        <button onclick="closePaperModal()" class="w-full text-center text-sm text-slate-400 hover:text-slate-600 transition py-1">
+            Batal
+        </button>
+    </div>
+</div>
+
+<style>
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(8px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+</style>
+
+<script>
+    let _pendingDownloadAll = 0;
+
+    function showPaperModal(downloadAll) {
+        _pendingDownloadAll = downloadAll;
+        const modal = document.getElementById('paperSizeModal');
+        modal.style.display = 'flex';
+    }
+
+    function closePaperModal() {
+        document.getElementById('paperSizeModal').style.display = 'none';
+    }
+
+    function submitWithPaper(size) {
+        document.getElementById('paperSizeInput').value = size;
+        document.getElementById('downloadAllInput').value = _pendingDownloadAll;
+        const form = document.getElementById('laporanFilterForm');
+        form.action = '{{ route($routePrefix . ".laporan.download") }}';
+        form.target = '_blank';
+        closePaperModal();
+        form.submit();
+        // Reset form action after brief delay so future Tampilkan Data works normally
+        setTimeout(() => { form.action = '{{ route($routePrefix . ".laporan.index") }}'; form.target = ''; }, 500);
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('paperSizeModal').addEventListener('click', function(e) {
+        if (e.target === this) closePaperModal();
+    });
+</script>
+
 </x-app-layout>
