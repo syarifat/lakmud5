@@ -62,13 +62,13 @@
             margin-top: 40px;
         }
         @page {
-            margin: 40px;
+            margin: 40px 40px 80px 40px;
         }
         .footer-motto {
             position: fixed;
-            bottom: -15px;
-            left: 0px;
-            right: 0px;
+            bottom: 30px;
+            left: 40px;
+            right: 40px;
             height: 20px;
             font-family: 'Times New Roman', Times, serif;
             font-size: 12pt;
