@@ -62,11 +62,11 @@
             margin-top: 40px;
         }
         @page {
-            margin: 40px 40px 80px 40px;
+            margin: 40px 40px 60px 40px;
         }
         .footer-motto {
             position: fixed;
-            bottom: 30px;
+            bottom: 0;
             left: 40px;
             right: 40px;
             height: 20px;
