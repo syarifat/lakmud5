@@ -166,9 +166,16 @@ class LaporanController extends Controller
         ]);
 
         $type = $request->type;
+        $is_all = $request->download_all == 1;
 
         switch ($type) {
             case 'cv_pemateri':
+                if ($is_all) {
+                    $pemateris = Pemateri::with(['riwayatPendidikans', 'riwayatOrganisasis', 'riwayatPengkaderans'])->orderBy('nama')->get();
+                    $pdf = Pdf::loadView('admin.laporan.pdf.cv_pemateri', compact('pemateris', 'is_all'));
+                    return $this->downloadPdf($pdf, '01_Semua_CV_Pemateri.pdf');
+                }
+
                 $request->validate(['pemateri_id' => 'required|exists:pemateris,id']);
                 $pemateri = Pemateri::with(['riwayatPendidikans', 'riwayatOrganisasis', 'riwayatPengkaderans'])->findOrFail($request->pemateri_id);
                 
@@ -176,6 +183,24 @@ class LaporanController extends Controller
                 return $this->downloadPdf($pdf, '01_CV_Pemateri_' . $pemateri->nama . '.pdf');
 
             case 'daftar_hadir':
+                if ($is_all) {
+                    $jadwals = Jadwal::with(['materi', 'pemateri'])->orderBy('id')->get();
+                    $reportData = $jadwals->map(function($j) {
+                        $pesertas = User::where('role', 'peserta')
+                            ->with(['pendaftaran', 'absensis' => function ($q) use ($j) {
+                                $q->where('jadwal_id', $j->id);
+                            }])
+                            ->orderBy('name')
+                            ->get();
+                        return [
+                            'jadwal' => $j,
+                            'pesertas' => $pesertas
+                        ];
+                    });
+                    $pdf = Pdf::loadView('admin.laporan.pdf.daftar_hadir', compact('reportData', 'is_all'));
+                    return $this->downloadPdf($pdf, '02_Semua_Daftar_Hadir.pdf');
+                }
+
                 $request->validate(['jadwal_id' => 'required|exists:jadwals,id']);
                 $jadwal = Jadwal::with(['materi', 'pemateri'])->findOrFail($request->jadwal_id);
                 
@@ -191,6 +216,24 @@ class LaporanController extends Controller
                 return $this->downloadPdf($pdf, '02_Daftar_Hadir_' . $jadwal->materi->nama_materi . '.pdf');
 
             case 'penilaian_peserta':
+                if ($is_all) {
+                    $jadwals = Jadwal::with(['materi', 'pemateri'])->orderBy('id')->get();
+                    $reportData = $jadwals->map(function($j) {
+                        $pesertas = User::where('role', 'peserta')
+                            ->with(['pendaftaran', 'penilaianPesertas' => function ($q) use ($j) {
+                                $q->where('jadwal_id', $j->id);
+                            }])
+                            ->orderBy('name')
+                            ->get();
+                        return [
+                            'jadwal' => $j,
+                            'pesertas' => $pesertas
+                        ];
+                    });
+                    $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_peserta', compact('reportData', 'is_all'));
+                    return $this->downloadPdf($pdf, '03_Semua_Penilaian_Peserta.pdf');
+                }
+
                 $request->validate(['jadwal_id' => 'required|exists:jadwals,id']);
                 $jadwal = Jadwal::with(['materi', 'pemateri'])->findOrFail($request->jadwal_id);
                 
@@ -205,6 +248,28 @@ class LaporanController extends Controller
                 return $this->downloadPdf($pdf, '03_Penilaian_Peserta_' . $jadwal->materi->nama_materi . '.pdf');
 
             case 'observasi_harian':
+                if ($is_all) {
+                    $kelompoks = Kelompok::with('pendamping')->orderBy('nama_kelompok')->get();
+                    $reportData = collect();
+                    foreach ($kelompoks as $kelompok) {
+                        $pesertas = $kelompok->pesertas()->orderBy('name')->get();
+                        for ($hari = 1; $hari <= 4; $hari++) {
+                            $observasis = ObservasiHarian::where('hari_ke', $hari)
+                                ->whereIn('peserta_id', $pesertas->pluck('id'))
+                                ->get()
+                                ->keyBy('peserta_id');
+                            $reportData->push([
+                                'kelompok' => $kelompok,
+                                'pesertas' => $pesertas,
+                                'hari_ke' => $hari,
+                                'observasis' => $observasis
+                            ]);
+                        }
+                    }
+                    $pdf = Pdf::loadView('admin.laporan.pdf.observasi_harian', compact('reportData', 'is_all'));
+                    return $this->downloadPdf($pdf, '04_Semua_Observasi_Harian.pdf');
+                }
+
                 $request->validate([
                     'kelompok_id' => 'required|exists:kelompoks,id',
                     'hari_ke' => 'required|integer|min:1|max:4',
@@ -222,6 +287,21 @@ class LaporanController extends Controller
                 return $this->downloadPdf($pdf, '04_Observasi_Harian_Kelompok_' . $kelompok->nama_kelompok . '_Hari_' . $hari_ke . '.pdf');
 
             case 'nilai_pemateri':
+                if ($is_all) {
+                    $pesertas = User::where('role', 'peserta')->with('pendaftaran')->orderBy('name')->get();
+                    $jadwals = Jadwal::with(['materi', 'pemateri'])->get();
+                    $reportData = $pesertas->map(function($peserta) use ($jadwals) {
+                        $ratings = NilaiPemateri::where('peserta_id', $peserta->id)->get()->keyBy('jadwal_id');
+                        return [
+                            'peserta' => $peserta,
+                            'jadwals' => $jadwals,
+                            'ratings' => $ratings
+                        ];
+                    });
+                    $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_pemateri_oleh_peserta', compact('reportData', 'is_all'));
+                    return $this->downloadPdf($pdf, '05_Semua_Penilaian_Pemateri.pdf');
+                }
+
                 $request->validate(['peserta_id' => 'required|exists:users,id']);
                 $peserta = User::with('pendaftaran')->findOrFail($request->peserta_id);
                 
@@ -237,6 +317,21 @@ class LaporanController extends Controller
                 return $this->downloadPdf($pdf, '05_Penilaian_Pemateri_Oleh_' . $peserta->name . '.pdf');
 
             case 'nilai_inspel':
+                if ($is_all) {
+                    $pesertas = User::where('role', 'peserta')->with('pendaftaran')->orderBy('name')->get();
+                    $inspels = User::where('role', 'inspel')->orderBy('name')->get();
+                    $reportData = $pesertas->map(function($peserta) use ($inspels) {
+                        $ratings = NilaiInspel::where('peserta_id', $peserta->id)->get()->keyBy('inspel_id');
+                        return [
+                            'peserta' => $peserta,
+                            'inspels' => $inspels,
+                            'ratings' => $ratings
+                        ];
+                    });
+                    $pdf = Pdf::loadView('admin.laporan.pdf.penilaian_inspel_oleh_peserta', compact('reportData', 'is_all'));
+                    return $this->downloadPdf($pdf, '06_Semua_Penilaian_Inspel.pdf');
+                }
+
                 $request->validate(['peserta_id' => 'required|exists:users,id']);
                 $peserta = User::with('pendaftaran')->findOrFail($request->peserta_id);
                 
@@ -252,6 +347,25 @@ class LaporanController extends Controller
                 return $this->downloadPdf($pdf, '06_Penilaian_Inspel_Oleh_' . $peserta->name . '.pdf');
 
             case 'evaluasi_refleksi':
+                if ($is_all) {
+                    $pesertas = User::where('role', 'peserta')->with('pendaftaran')->orderBy('name')->get();
+                    $reportData = collect();
+                    foreach ($pesertas as $peserta) {
+                        for ($hari = 1; $hari <= 4; $hari++) {
+                            $evaluasi = EvaluasiRefleksi::where('peserta_id', $peserta->id)
+                                ->where('hari_ke', $hari)
+                                ->first();
+                            $reportData->push([
+                                'peserta' => $peserta,
+                                'hari_ke' => $hari,
+                                'evaluasi' => $evaluasi
+                            ]);
+                        }
+                    }
+                    $pdf = Pdf::loadView('admin.laporan.pdf.evaluasi_refleksi_peserta', compact('reportData', 'is_all'));
+                    return $this->downloadPdf($pdf, '07_Semua_Evaluasi_Refleksi.pdf');
+                }
+
                 $request->validate([
                     'peserta_id' => 'required|exists:users,id',
                     'hari_ke' => 'required|integer|min:1|max:4',

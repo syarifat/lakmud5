@@ -30,6 +30,7 @@
             <!-- Interactive Report Filter Selector -->
             <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 sm:p-8">
                 <form id="laporanFilterForm" method="GET" action="{{ route($routePrefix . '.laporan.index') }}" class="space-y-6">
+                    <input type="hidden" name="download_all" id="downloadAllInput" value="0">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Dropdown Jenis Laporan -->
                         <div class="md:col-span-1">
@@ -146,17 +147,23 @@
 
                     @if($type)
                         <div class="flex flex-col sm:flex-row items-center justify-end gap-3 border-t border-slate-100 pt-4">
-                            <button type="submit" onclick="this.form.action='{{ route($routePrefix . '.laporan.index') }}'; this.form.target='';"
+                            <button type="submit" onclick="document.getElementById('downloadAllInput').value='0'; this.form.action='{{ route($routePrefix . '.laporan.index') }}'; this.form.target='';"
                                 class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-sm px-6 py-3 rounded-xl transition shadow-sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                 Tampilkan Data
                             </button>
                             
                             @if($type !== 'berkas_jawaban')
-                                <button type="submit" onclick="this.form.action='{{ route($routePrefix . '.laporan.download') }}'; this.form.target='_blank';"
+                                <button type="submit" onclick="document.getElementById('downloadAllInput').value='0'; this.form.action='{{ route($routePrefix . '.laporan.download') }}'; this.form.target='_blank';"
+                                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm px-6 py-3 rounded-xl transition shadow-md">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                    Unduh PDF (Filter)
+                                </button>
+                                
+                                <button type="submit" onclick="document.getElementById('downloadAllInput').value='1'; this.form.action='{{ route($routePrefix . '.laporan.download') }}'; this.form.target='_blank';"
                                     class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-6 py-3 rounded-xl transition shadow-md hover:shadow-lg">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                    Unduh PDF
+                                    Unduh Semua PDF
                                 </button>
                             @endif
                         </div>

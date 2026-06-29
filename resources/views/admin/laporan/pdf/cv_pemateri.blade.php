@@ -98,174 +98,181 @@
     </style>
 </head>
 <body>
-
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-        <tr>
-            <td style="width: 20%; text-align: left; vertical-align: middle; padding-bottom: 8px;">
-                <img src="{{ public_path('logo.png') }}" style="height: 140px; width: auto;">
-            </td>
-            <td style="width: 80%; text-align: right; vertical-align: middle; padding-bottom: 8px; padding-right: 5px;">
-                <div style="font-family: 'Times New Roman', Times, serif; font-size: 15pt; color: #00A651; font-weight: bold; line-height: 1.25; text-transform: uppercase;">
-                    PANITIA PELAKSANA LATIHAN KADER MUDA V<br>
-                    PIMPINAN ANAK CABANG<br>
-                    IKATAN PELAJAR NAHDLATUL ULAMA<br>
-                    IKATAN PELAJAR PUTRI NAHDLATUL ULAMA<br>
-                    KECAMATAN KAUMAN
-                </div>
-                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 8.5pt; color: #000000; font-weight: bold; line-height: 1.35; margin-top: 5px;">
-                    Jln. Sidoluhur Gg. II, Dsn. Bancaan, Ds. Mojosari, Kec. Kauman - Tulungagung<br>
-                    0883011340460/089617377022<br>
-                    pacipippkauman@gmail.com<br>
-                    pacipnuippnukauman.online
-                </div>
-            </td>
-        </tr>
-    </table>
-
-    <div class="title" style="margin-top: 10px;">CURRICULUM VITAE</div>
-
-    <table class="bio-container-table">
-        <tr>
-            <td style="vertical-align: top;">
-                <table class="bio-table">
-                    <tr>
-                        <td class="label">Nama Lengkap</td>
-                        <td class="separator">:</td>
-                        <td>{{ $pemateri->nama }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Tempat, Tgl Lahir</td>
-                        <td class="separator">:</td>
-                        <td>{{ $pemateri->tempat_lahir }}, {{ \Carbon\Carbon::parse($pemateri->tanggal_lahir)->translatedFormat('d F Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Alamat Lengkap</td>
-                        <td class="separator">:</td>
-                        <td>{{ $pemateri->alamat }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Nomor HP / WA</td>
-                        <td class="separator">:</td>
-                        <td>{{ $pemateri->no_telp }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Instagram</td>
-                        <td class="separator">:</td>
-                        <td>{{ $pemateri->instagram ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Email</td>
-                        <td class="separator">:</td>
-                        <td>{{ $pemateri->email ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Motto Hidup</td>
-                        <td class="separator">:</td>
-                        <td>"{{ $pemateri->motto }}"</td>
-                    </tr>
-                </table>
-            </td>
-            <td class="photo-cell">
-                @if($pemateri->foto)
-                    <img src="{{ public_path('storage/' . $pemateri->foto) }}" class="photo-img">
-                @else
-                    <div style="width: 120px; height: 150px; border: 1px solid #ccc; line-height: 150px; font-size: 8pt; color: #777; background-color: #f9f9f9; text-align: center;">
-                        Foto Kosong
+    @php
+        $items = isset($is_all) && $is_all ? $pemateris : collect([$pemateri]);
+    @endphp
+    @foreach($items as $pemateri)
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+            <tr>
+                <td style="width: 20%; text-align: left; vertical-align: middle; padding-bottom: 8px;">
+                    <img src="{{ public_path('logo.png') }}" style="height: 140px; width: auto;">
+                </td>
+                <td style="width: 80%; text-align: right; vertical-align: middle; padding-bottom: 8px; padding-right: 5px;">
+                    <div style="font-family: 'Times New Roman', Times, serif; font-size: 15pt; color: #00A651; font-weight: bold; line-height: 1.25; text-transform: uppercase;">
+                        PANITIA PELAKSANA LATIHAN KADER MUDA V<br>
+                        PIMPINAN ANAK CABANG<br>
+                        IKATAN PELAJAR NAHDLATUL ULAMA<br>
+                        IKATAN PELAJAR PUTRI NAHDLATUL ULAMA<br>
+                        KECAMATAN KAUMAN
                     </div>
-                @endif
-            </td>
-        </tr>
-    </table>
-
-    <!-- Riwayat Pendidikan -->
-    <div class="section-title">Riwayat Pendidikan</div>
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th style="width: 8%;">No.</th>
-                <th style="width: 32%;">Tingkat Pendidikan</th>
-                <th>Nama Sekolah / Kampus</th>
-                <th style="width: 20%;">Tahun Lulus</th>
+                    <div style="font-family: Arial, Helvetica, sans-serif; font-size: 8.5pt; color: #000000; font-weight: bold; line-height: 1.35; margin-top: 5px;">
+                        Jln. Sidoluhur Gg. II, Dsn. Bancaan, Ds. Mojosari, Kec. Kauman - Tulungagung<br>
+                        0883011340460/089617377022<br>
+                        pacipippkauman@gmail.com<br>
+                        pacipnuippnukauman.online
+                    </div>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @forelse($pemateri->riwayatPendidikans as $index => $pendidikan)
-                <tr>
-                    <td style="text-align: center;">{{ $index + 1 }}</td>
-                    <td style="font-weight: bold; color: #444;">{{ $pendidikan->jenjang }}</td>
-                    <td>{{ $pendidikan->nama_sekolah }}</td>
-                    <td style="text-align: center;">{{ $pendidikan->tahun }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" style="text-align: center; color: #777; font-style: italic;">Tidak ada data riwayat pendidikan.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+        </table>
 
-    <!-- Riwayat Organisasi -->
-    <div class="section-title">Riwayat Organisasi</div>
-    <table class="data-table">
-        <thead>
+        <div class="title" style="margin-top: 10px;">CURRICULUM VITAE</div>
+
+        <table class="bio-container-table">
             <tr>
-                <th style="width: 8%;">No.</th>
-                <th>Nama Organisasi</th>
-                <th>Jabatan</th>
-                <th style="width: 20%;">Tahun / Periode</th>
+                <td style="vertical-align: top;">
+                    <table class="bio-table">
+                        <tr>
+                            <td class="label">Nama Lengkap</td>
+                            <td class="separator">:</td>
+                            <td>{{ $pemateri->nama }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Tempat, Tgl Lahir</td>
+                            <td class="separator">:</td>
+                            <td>{{ $pemateri->tempat_lahir }}, {{ \Carbon\Carbon::parse($pemateri->tanggal_lahir)->translatedFormat('d F Y') }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Alamat Lengkap</td>
+                            <td class="separator">:</td>
+                            <td>{{ $pemateri->alamat }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Nomor HP / WA</td>
+                            <td class="separator">:</td>
+                            <td>{{ $pemateri->no_telp }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Instagram</td>
+                            <td class="separator">:</td>
+                            <td>{{ $pemateri->instagram ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Email</td>
+                            <td class="separator">:</td>
+                            <td>{{ $pemateri->email ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Motto Hidup</td>
+                            <td class="separator">:</td>
+                            <td>"{{ $pemateri->motto }}"</td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="photo-cell">
+                    @if($pemateri->foto)
+                        <img src="{{ public_path('storage/' . $pemateri->foto) }}" class="photo-img">
+                    @else
+                        <div style="width: 120px; height: 150px; border: 1px solid #ccc; line-height: 150px; font-size: 8pt; color: #777; background-color: #f9f9f9; text-align: center;">
+                            Foto Kosong
+                        </div>
+                    @endif
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @forelse($pemateri->riwayatOrganisasis as $index => $organisasi)
-                <tr>
-                    <td style="text-align: center;">{{ $index + 1 }}</td>
-                    <td style="font-weight: bold;">{{ $organisasi->nama_organisasi }}</td>
-                    <td>{{ $organisasi->jabatan }}</td>
-                    <td style="text-align: center;">{{ $organisasi->tahun }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" style="text-align: center; color: #777; font-style: italic;">Tidak ada data riwayat organisasi.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+        </table>
 
-    <!-- Riwayat Pengkaderan -->
-    <div class="section-title">Riwayat Pengkaderan</div>
-    <table class="data-table">
-        <thead>
+        <!-- Riwayat Pendidikan -->
+        <div class="section-title">Riwayat Pendidikan</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">No.</th>
+                    <th style="width: 32%;">Tingkat Pendidikan</th>
+                    <th>Nama Sekolah / Kampus</th>
+                    <th style="width: 20%;">Tahun Lulus</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($pemateri->riwayatPendidikans as $index => $pendidikan)
+                    <tr>
+                        <td style="text-align: center;">{{ $index + 1 }}</td>
+                        <td style="font-weight: bold; color: #444;">{{ $pendidikan->jenjang }}</td>
+                        <td>{{ $pendidikan->nama_sekolah }}</td>
+                        <td style="text-align: center;">{{ $pendidikan->tahun }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #777; font-style: italic;">Tidak ada data riwayat pendidikan.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+
+        <!-- Riwayat Organisasi -->
+        <div class="section-title">Riwayat Organisasi</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">No.</th>
+                    <th>Nama Organisasi</th>
+                    <th>Jabatan</th>
+                    <th style="width: 20%;">Tahun / Periode</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($pemateri->riwayatOrganisasis as $index => $organisasi)
+                    <tr>
+                        <td style="text-align: center;">{{ $index + 1 }}</td>
+                        <td style="font-weight: bold;">{{ $organisasi->nama_organisasi }}</td>
+                        <td>{{ $organisasi->jabatan }}</td>
+                        <td style="text-align: center;">{{ $organisasi->tahun }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #777; font-style: italic;">Tidak ada data riwayat organisasi.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+
+        <!-- Riwayat Pengkaderan -->
+        <div class="section-title">Riwayat Pengkaderan</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">No.</th>
+                    <th style="width: 32%;">Tingkat Pengkaderan</th>
+                    <th>Nama Kegiatan / Tempat</th>
+                    <th style="width: 20%;">Tahun</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($pemateri->riwayatPengkaderans as $index => $pengkaderan)
+                    <tr>
+                        <td style="text-align: center;">{{ $index + 1 }}</td>
+                        <td style="font-weight: bold; color: #444;">{{ $pengkaderan->tingkat }}</td>
+                        <td>{{ $pengkaderan->nama }}</td>
+                        <td style="text-align: center;">{{ $pengkaderan->tahun }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #777; font-style: italic;">Tidak ada data riwayat pengkaderan.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+
+        <table class="signature-table">
             <tr>
-                <th style="width: 8%;">No.</th>
-                <th style="width: 32%;">Tingkat Pengkaderan</th>
-                <th>Nama Kegiatan / Tempat</th>
-                <th style="width: 20%;">Tahun</th>
+                <td>
+                    <div>Tulungagung, {{ now()->translatedFormat('d F Y') }}</div>
+                    <div class="signature-name">({{ $pemateri->nama }})</div>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @forelse($pemateri->riwayatPengkaderans as $index => $pengkaderan)
-                <tr>
-                    <td style="text-align: center;">{{ $index + 1 }}</td>
-                    <td style="font-weight: bold; color: #444;">{{ $pengkaderan->tingkat }}</td>
-                    <td>{{ $pengkaderan->nama }}</td>
-                    <td style="text-align: center;">{{ $pengkaderan->tahun }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" style="text-align: center; color: #777; font-style: italic;">Tidak ada data riwayat pengkaderan.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+        </table>
 
-    <table class="signature-table">
-        <tr>
-            <td>
-                <div>Tulungagung, {{ now()->translatedFormat('d F Y') }}</div>
-                <div class="signature-name">({{ $pemateri->nama }})</div>
-            </td>
-        </tr>
-    </table>
-
+        @if(!$loop->last)
+            <div style="page-break-after: always;"></div>
+        @endif
+    @endforeach
 </body>
 </html>

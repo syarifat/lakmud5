@@ -83,96 +83,107 @@
     </style>
 </head>
 <body>
-
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-        <tr>
-            <td style="width: 20%; text-align: left; vertical-align: middle; padding-bottom: 8px;">
-                <img src="{{ public_path('logo.png') }}" style="height: 160px; width: auto;">
-            </td>
-            <td style="width: 80%; text-align: right; vertical-align: middle; padding-bottom: 8px; padding-right: 5px;">
-                <div style="font-family: 'Times New Roman', Times, serif; font-size: 16pt; color: #00A651; font-weight: bold; line-height: 1.25; text-transform: uppercase;">
-                    PANITIA PELAKSANA LATIHAN KADER MUDA V<br>
-                    PIMPINAN ANAK CABANG<br>
-                    IKATAN PELAJAR NAHDLATUL ULAMA<br>
-                    IKATAN PELAJAR PUTRI NAHDLATUL ULAMA<br>
-                    KECAMATAN KAUMAN
-                </div>
-                <div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #000000; font-weight: bold; line-height: 1.35; margin-top: 5px;">
-                    Jln. Sidoluhur Gg. II, Dsn. Bancaan, Ds. Mojosari, Kec. Kauman - Tulungagung<br>
-                    0883011340460/089617377022<br>
-                    pacipippkauman@gmail.com<br>
-                    pacipnuippnukauman.online
-                </div>
-            </td>
-        </tr>
-    </table>
-
-    <div class="header" style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
-        <h1 style="font-size: 12pt; font-weight: bold; text-transform: uppercase;">LEMBAR PENILAIAN INSTRUKTUR/PELATIH</h1>
-        <h2 style="font-size: 11pt; font-weight: bold; text-transform: uppercase; margin-top: 3px; color: #444;">OLEH PESERTA LATIHAN KADER MUDA</h2>
-    </div>
-
-    <div class="instructions">
-        <strong>Petunjuk Teknis:</strong>
-        <p>1. Nilailah instruktur/pelatih dengan skala nilai 50-90.</p>
-        <p>2. Berilah catatan khusus bila diperlukan.</p>
-        <p>3. Konsultasikan kepada pendamping jika menemui kendala.</p>
-    </div>
-
-    <table class="meta-table">
-        <tr>
-            <td>Nama Peserta : {{ $peserta->name }}</td>
-            <td style="text-align: right;">Delegasi : {{ $peserta->pendaftaran ? $peserta->pendaftaran->delegasi : '-' }}</td>
-        </tr>
-    </table>
-
-    <table class="main-table">
-        <thead>
+    @php
+        $pages = isset($is_all) && $is_all ? $reportData : collect([['peserta' => $peserta, 'inspels' => $inspels, 'ratings' => $ratings]]);
+    @endphp
+    @foreach($pages as $page)
+        @php
+            $peserta = $page['peserta'];
+            $inspels = $page['inspels'];
+            $ratings = $page['ratings'];
+        @endphp
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
             <tr>
-                <th rowspan="2" style="width: 5%;">No.</th>
-                <th rowspan="2" style="width: 35%;">INSTRUKTUR/PELATIH</th>
-                <th rowspan="2" style="width: 35%;">CATATAN KHUSUS</th>
-                <th colspan="5">NILAI</th>
+                <td style="width: 20%; text-align: left; vertical-align: middle; padding-bottom: 8px;">
+                    <img src="{{ public_path('logo.png') }}" style="height: 160px; width: auto;">
+                </td>
+                <td style="width: 80%; text-align: right; vertical-align: middle; padding-bottom: 8px; padding-right: 5px;">
+                    <div style="font-family: 'Times New Roman', Times, serif; font-size: 16pt; color: #00A651; font-weight: bold; line-height: 1.25; text-transform: uppercase;">
+                        PANITIA PELAKSANA LATIHAN KADER MUDA V<br>
+                        PIMPINAN ANAK CABANG<br>
+                        IKATAN PELAJAR NAHDLATUL ULAMA<br>
+                        IKATAN PELAJAR PUTRI NAHDLATUL ULAMA<br>
+                        KECAMATAN KAUMAN
+                    </div>
+                    <div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #000000; font-weight: bold; line-height: 1.35; margin-top: 5px;">
+                        Jln. Sidoluhur Gg. II, Dsn. Bancaan, Ds. Mojosari, Kec. Kauman - Tulungagung<br>
+                        0883011340460/089617377022<br>
+                        pacipippkauman@gmail.com<br>
+                        pacipnuippnukauman.online
+                    </div>
+                </td>
             </tr>
+        </table>
+
+        <div class="header" style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+            <h1 style="font-size: 12pt; font-weight: bold; text-transform: uppercase;">LEMBAR PENILAIAN INSTRUKTUR/PELATIH</h1>
+            <h2 style="font-size: 11pt; font-weight: bold; text-transform: uppercase; margin-top: 3px; color: #444;">OLEH PESERTA LATIHAN KADER MUDA</h2>
+        </div>
+
+        <div class="instructions">
+            <strong>Petunjuk Teknis:</strong>
+            <p>1. Nilailah instruktur/pelatih dengan skala nilai 50-90.</p>
+            <p>2. Berilah catatan khusus bila diperlukan.</p>
+            <p>3. Konsultasikan kepada pendamping jika menemui kendala.</p>
+        </div>
+
+        <table class="meta-table">
             <tr>
-                <th class="check-cell">50</th>
-                <th class="check-cell">60</th>
-                <th class="check-cell">70</th>
-                <th class="check-cell">80</th>
-                <th class="check-cell">90</th>
+                <td>Nama Peserta : {{ $peserta->name }}</td>
+                <td style="text-align: right;">Delegasi : {{ $peserta->pendaftaran ? $peserta->pendaftaran->delegasi : '-' }}</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach($inspels as $index => $inspel)
-                @php
-                    $rating = $ratings->get($inspel->id);
-                @endphp
+        </table>
+
+        <table class="main-table">
+            <thead>
                 <tr>
-                    <td class="text-center">{{ $index + 1 }}.</td>
-                    <td>{{ $inspel->name }}</td>
-                    <td>{{ $rating ? $rating->catatan_khusus : '' }}</td>
-                    
-                    <!-- Nilai check -->
-                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 50) ? '✓' : '' }}</td>
-                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 60) ? '✓' : '' }}</td>
-                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 70) ? '✓' : '' }}</td>
-                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 80) ? '✓' : '' }}</td>
-                    <td class="check-cell text-center">{{ ($rating && $rating->nilai == 90) ? '✓' : '' }}</td>
+                    <th rowspan="2" style="width: 5%;">No.</th>
+                    <th rowspan="2" style="width: 35%;">INSTRUKTUR/PELATIH</th>
+                    <th rowspan="2" style="width: 35%;">CATATAN KHUSUS</th>
+                    <th colspan="5">NILAI</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+                <tr>
+                    <th class="check-cell">50</th>
+                    <th class="check-cell">60</th>
+                    <th class="check-cell">70</th>
+                    <th class="check-cell">80</th>
+                    <th class="check-cell">90</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($inspels as $index => $inspel)
+                    @php
+                        $rating = isset($ratings) ? $ratings->get($inspel->id) : null;
+                    @endphp
+                    <tr>
+                        <td class="text-center">{{ $index + 1 }}.</td>
+                        <td>{{ $inspel->name }}</td>
+                        <td>{{ $rating ? $rating->catatan_khusus : '' }}</td>
+                        
+                        <!-- Nilai check -->
+                        <td class="check-cell text-center">{{ ($rating && $rating->nilai == 50) ? '✓' : '' }}</td>
+                        <td class="check-cell text-center">{{ ($rating && $rating->nilai == 60) ? '✓' : '' }}</td>
+                        <td class="check-cell text-center">{{ ($rating && $rating->nilai == 70) ? '✓' : '' }}</td>
+                        <td class="check-cell text-center">{{ ($rating && $rating->nilai == 80) ? '✓' : '' }}</td>
+                        <td class="check-cell text-center">{{ ($rating && $rating->nilai == 90) ? '✓' : '' }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-    <table class="signature-table">
-        <tr>
-            <td style="width: 60%;"></td>
-            <td style="text-align: right; padding-right: 40px;">
-                <div>Tulungagung, {{ now()->translatedFormat('d F Y') }}</div>
-                <div style="margin-top: 5px;">Peserta LAKMUD</div>
-                <div style="margin-top: 60px; font-weight: bold; text-decoration: underline;">{{ $peserta->name }}</div>
-            </td>
-        </tr>
-    </table>
-
+        <table class="signature-table">
+            <tr>
+                <td style="width: 60%;"></td>
+                <td style="text-align: right; padding-right: 40px;">
+                    <div>Tulungagung, {{ now()->translatedFormat('d F Y') }}</div>
+                    <div style="margin-top: 5px;">Peserta LAKMUD</div>
+                    <div style="margin-top: 60px; font-weight: bold; text-decoration: underline;">{{ $peserta->name }}</div>
+                </td>
+            </tr>
+        </table>
+        @if(!$loop->last)
+            <div style="page-break-after: always;"></div>
+        @endif
+    @endforeach
 </body>
 </html>
